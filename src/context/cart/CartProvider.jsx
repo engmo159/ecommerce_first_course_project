@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CartContext } from './CartContext'
 import axios from 'axios'
 import { useAuth } from '../Auth/AuthContext'
@@ -6,28 +6,141 @@ const CartProvider = ({ children }) => {
   const { token } = useAuth()
   const [cartItems, setCartItems] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
+  const fetchCartData = () => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/cart`)
+      .then(res => {
+        const cartItemsMapping = res.data.items.map(
+          ({ product, quantity }) => ({
+            productId: product._id,
+            title: product.title,
+            price: product.price,
+            description: product.description,
+            category: product.category,
+            image: product.image,
+            rating: product.rating,
+            unitPrice: product.unitPrice,
+            quantity,
+          })
+          // {
+          //   headers: { Authorization: `Bearer ${token}` },
+          // }
+        )
+        setCartItems(cartItemsMapping)
+        setTotalAmount(res.data.totalAmount)
+        console.log(res)
+      })
+      .catch(err => console.error(err))
+  }
+  useEffect(() => {
+    fetchCartData()
+  }, [token])
+
   const addItemsToCart = productId => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/cart/items`, {
-        productId,
-        quantity: 1,
-      })
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/cart/items`,
+        {
+          productId,
+          quantity: 1,
+        }
+        // {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // }
+      )
       .then(res => {
         const cart = res.data
-        console.log(cart)
-        const cartItemsMapping = cart.items.map(({ product }, quantity) => ({
-          productId: product._id,
-          title: product.title,
-          price: product.price,
-          description: product.description,
-          category: product.category,
-          image: product.image,
-          rating: product.rating,
-          unitPrice: product.unitPrice,
-          quantity,
-        }))
+        const cartItemsMapping = res.data.items.map(
+          ({ product, quantity }) => ({
+            productId: product._id,
+            title: product.title,
+            price: product.price,
+            description: product.description,
+            category: product.category,
+            image: product.image,
+            rating: product.rating,
+            unitPrice: product.unitPrice,
+            quantity,
+          })
+        )
+
         setCartItems([...cartItemsMapping])
         setTotalAmount(cart.totalAmount)
+      })
+      .catch(err => console.error(err))
+  }
+  const updateItemsInCart = ({ productId, quantity }) => {
+    axios
+      .put(
+        `${import.meta.env.VITE_BACKEND_URL}/cart/items/edit`,
+        {
+          productId,
+          quantity,
+        }
+        // {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // }
+      )
+      .then(res => {
+        const cart = res.data
+        const cartItemsMapping = res.data.items.map(
+          ({ product, quantity, unitPrice }) => ({
+            productId: product._id,
+            title: product.title,
+            description: product.description,
+            category: product.category,
+            image: product.image,
+            rating: product.rating,
+            quantity,
+            price: unitPrice,
+          })
+        )
+
+        setCartItems([...cartItemsMapping])
+        setTotalAmount(cart.totalAmount)
+      })
+      .catch(err => console.error(err))
+  }
+  const deleteItemInCart = productId => {
+    axios
+      .delete(
+        `${import.meta.env.VITE_BACKEND_URL}/cart/items/delete/${productId}`
+        // {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // }
+      )
+      .then(res => {
+        const cart = res.data
+        const cartItemsMapping = res.data.items.map(
+          ({ product, quantity, unitPrice }) => ({
+            productId: product._id,
+            title: product.title,
+            description: product.description,
+            category: product.category,
+            image: product.image,
+            rating: product.rating,
+            quantity,
+            price: unitPrice,
+          })
+        )
+
+        setCartItems([...cartItemsMapping])
+        setTotalAmount(cart.totalAmount)
+      })
+      .catch(err => console.error(err))
+  }
+
+  const clearCartHandler = () => {
+    axios
+      .delete(
+        `${import.meta.env.VITE_BACKEND_URL}/cart`
+        // {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // }
+      )
+      .then(() => {
+        setCartItems([])
+        setTotalAmount(0)
       })
       .catch(err => console.error(err))
   }
@@ -39,6 +152,10 @@ const CartProvider = ({ children }) => {
         addItemsToCart,
         setCartItems,
         setTotalAmount,
+        updateItemsInCart,
+        deleteItemInCart,
+        clearCartHandler,
+        fetchCartData,
       }}
     >
       {children}

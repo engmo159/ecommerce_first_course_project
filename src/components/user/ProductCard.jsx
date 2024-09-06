@@ -17,7 +17,7 @@ const myStyles = {
 }
 const ProductCard = ({ _id, title, description, price, rating, image }) => {
   const [starRating, setStarRating] = useState(Math.round(rating.rate))
-  const { addItemsToCart } = useCart()
+  const { addItemsToCart, fetchCartData } = useCart()
 
   return (
     <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group'>
@@ -25,13 +25,16 @@ const ProductCard = ({ _id, title, description, price, rating, image }) => {
         color='transparent'
         className='relative border-none shadow-none'
       >
-        <img src={image} className='max-w-36 max-h-36 mx-auto' />
+        <img src={image} loading='lazy' className='max-w-36 max-h-36 mx-auto' />
       </CardHeader>
       <CardBody className='p-2 flex flex-col '>
         <div className='hidden group-hover:flex items-center justify-between '>
           <Button
             className=' rounded-none bg-transparent text-green-800 font-bold text-md border-none shadow-none hover:shadow-none'
-            onClick={() => addItemsToCart(_id)}
+            onClick={() => {
+              addItemsToCart(_id)
+              fetchCartData()
+            }}
           >
             + Add to cart
           </Button>

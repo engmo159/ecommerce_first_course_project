@@ -1,13 +1,15 @@
 import DarkMode from './DarkMode'
 import { Link, useLocation } from 'react-router-dom'
-import { Typography } from '@material-tailwind/react'
+import { Badge, Typography } from '@material-tailwind/react'
 import { useAuth } from '../../context/Auth/AuthContext'
 import ProfileMenu from './ProfileMenu'
 import { IoEnterOutline } from 'react-icons/io5'
 import { CiShoppingCart } from 'react-icons/ci'
+import { useCart } from '../../context/cart/CartContext'
 
 const NavList = ({ theme, setTheme }) => {
   const { isAuthenticated } = useAuth()
+  const { cartItems } = useCart()
   const location = useLocation()
   return (
     <ul className='mt-2 mb-4 flex  lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:justify-between w-full '>
@@ -45,7 +47,9 @@ const NavList = ({ theme, setTheme }) => {
             to={'/cart'}
             className={`flex items-center  text-gray-900 px-4 py-1 rounded hover:scale-110 transition-all `}
           >
-            <CiShoppingCart className='text-3xl font-bold' />
+            <Badge content={cartItems.length}>
+              <CiShoppingCart className='text-3xl font-bold' />
+            </Badge>
           </Link>
         </Typography>
         {/* login &profile icon */}

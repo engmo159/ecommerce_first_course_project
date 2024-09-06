@@ -1,30 +1,57 @@
 import { Typography, Button } from '@material-tailwind/react'
 import { FaCreditCard } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { CiShoppingCart } from 'react-icons/ci'
-import { useAuth } from '../../context/Auth/AuthContext'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+
 import { useCart } from '../../context/cart/CartContext'
+import EmptyCart from '../../components/user/EmptyCart'
+import FullCart from '../../components/user/FullCart'
+import { MdDelete } from 'react-icons/md'
 
 const Cart = () => {
-  const { token } = useAuth()
-  const { cartItems, totalAmount } = useCart()
-  console.log(cartItems)
-  // useEffect(() => {
-  //   axios.get(`${import.meta.env.VITE_BACKEND_URL}/cart`).then(res => {})
-  // }, [token])
+  const { cartItems, totalAmount, clearCartHandler } = useCart()
 
   return (
-    <div className='text-center flex justify-evenly h-screen'>
-      <div className='w-1/3 flex flex-col justify-center items-center'>
-        <img src='/img/empty-shopping.jpg' className='w-3/4' />
-        <Link to={'/products'}>
-          <Button color='green' className='flex gap-4 text-xl items-center'>
-            Shop Now <CiShoppingCart className='text-3xl font-bold' />
+    <div className='text-center flex justify-evenly min-h-screen'>
+      {cartItems.length == 0 ? (
+        <EmptyCart />
+      ) : (
+        <div className='w-full flex flex-col justify-evenly '>
+          {/* clear cart items  */}
+          <Button
+            className=' text-blue-800 w-fit mx-auto'
+            onClick={() => {
+              clearCartHandler()
+            }}
+          >
+            <div className='flex justify-center gap-2'>
+              <Typography
+                variant='h5'
+                color='gray'
+                className='text-lg uppercase '
+              >
+                ClearCart
+              </Typography>
+              <MdDelete className='text-3xl' />
+            </div>
           </Button>
-        </Link>
-      </div>
+          {cartItems.map(
+            ({ productId, title, quantity, image, price }, index) => (
+              <div key={index}>
+                <FullCart
+                  productId={productId}
+                  price={price}
+                  title={title}
+                  quantity={quantity}
+                  image={image}
+                />
+              </div>
+            )
+          )}
+          <Typography variant='h5' color='gray' className='text-2xl uppercase '>
+            total amount :{totalAmount} $
+          </Typography>
+        </div>
+      )}
       <div className='w-1/4 '>
         <div className='bg-gray-300 mt-8 flex flex-col gap-4 p-4 rounded'>
           <Typography variant='h5' color='gray' className='text-lg uppercase '>

@@ -1,7 +1,6 @@
 import { Typography, Button } from '@material-tailwind/react'
 import { FaCreditCard } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-
 import { useCart } from '../../context/cart/CartContext'
 import EmptyCart from '../../components/user/EmptyCart'
 import FullCart from '../../components/user/FullCart'

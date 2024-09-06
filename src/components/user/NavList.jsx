@@ -4,6 +4,7 @@ import { Typography } from '@material-tailwind/react'
 import { useAuth } from '../../context/Auth/AuthContext'
 import ProfileMenu from './ProfileMenu'
 import { IoEnterOutline } from 'react-icons/io5'
+import { CiShoppingCart } from 'react-icons/ci'
 
 const NavList = ({ theme, setTheme }) => {
   const { isAuthenticated } = useAuth()
@@ -32,7 +33,22 @@ const NavList = ({ theme, setTheme }) => {
           </Link>
         </Typography>
       </div>
+
       <div className='flex gap-4'>
+        <Typography
+          as='li'
+          variant='small'
+          color='blue-gray'
+          className='p-1  text-xl'
+        >
+          <Link
+            to={'/cart'}
+            className={`flex items-center  text-gray-900 px-4 py-1 rounded hover:scale-110 transition-all `}
+          >
+            <CiShoppingCart className='text-3xl font-bold' />
+          </Link>
+        </Typography>
+        {/* login &profile icon */}
         {isAuthenticated ? (
           <ProfileMenu />
         ) : (

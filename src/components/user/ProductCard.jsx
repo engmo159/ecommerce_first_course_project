@@ -3,36 +3,46 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Typography,
   Button,
 } from '@material-tailwind/react'
 import { Rating, ThinStar } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
-
+import { CiShoppingCart } from 'react-icons/ci'
+import { useCart } from '../../context/cart/CartContext'
 const myStyles = {
   itemShapes: ThinStar,
   activeFillColor: '#ffb700',
   inactiveFillColor: '#fbf1a9',
 }
-const ProductCard = ({
-  name,
-  description,
-  price,
-  discountPercentage,
-  rating,
-  thumbnail,
-}) => {
-  const [starRating, setStarRating] = useState(Math.round(rating))
+const ProductCard = ({ _id, title, description, price, rating, image }) => {
+  const [starRating, setStarRating] = useState(Math.round(rating.rate))
+  const { addItemsToCart } = useCart()
 
   return (
-    <Card className='flex items-center justify-between bg-gray-300 cursor-pointer hover:scale-105 transition-all'>
-      <CardHeader color='blue-gray' className='relative mt-1 '>
-        <img src={thumbnail} className='w-full' />
+    <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group'>
+      <CardHeader
+        color='transparent'
+        className='relative border-none shadow-none'
+      >
+        <img src={image} className='max-w-36 max-h-36 mx-auto' />
       </CardHeader>
-      <CardBody className='p-2 flex flex-col gap-2 items-center'>
-        <Typography variant='h5' color='black' className='text-md'>
-          {name}
+      <CardBody className='p-2 flex flex-col '>
+        <div className='hidden group-hover:flex items-center justify-between '>
+          <Button
+            className=' rounded-none bg-transparent text-green-800 font-bold text-md border-none shadow-none hover:shadow-none'
+            onClick={() => addItemsToCart(_id)}
+          >
+            + Add to cart
+          </Button>
+          <CiShoppingCart color='blue' className='text-2xl font-bold ' />
+        </div>
+        <Typography
+          variant='h5'
+          color='gray'
+          className='text-lg   group-hover:hidden '
+        >
+          {title}
         </Typography>
         <Typography
           variant='paragraph'
@@ -41,32 +51,18 @@ const ProductCard = ({
         >
           {description?.slice(0, 70)}
         </Typography>
-        <div className='flex justify-evenly items-center w-full'>
-          <Typography
-            variant='h6'
-            color='gray'
-            className='font-bold line-through text-lg'
-          >
-            {price}$
-          </Typography>
-          <Typography variant='h6' color='green' className='font-bold text-lg'>
-            {((price * (100 - discountPercentage)) / 100).toFixed(2)}$
-          </Typography>
-        </div>
+
         <Rating
           itemStyles={myStyles}
-          style={{ maxWidth: 180 }}
+          style={{ maxWidth: 120 }}
           value={starRating}
           onChange={setStarRating}
           transition='zoom'
         />
+        <Typography variant='h6' color='gray' className='font-bold  text-lg'>
+          {price}$
+        </Typography>
       </CardBody>
-
-      <CardFooter className='p-0 w-full '>
-        <Button className='w-full rounded-none  bg-teal-700 text-md'>
-          Add to cart
-        </Button>
-      </CardFooter>
     </Card>
   )
 }

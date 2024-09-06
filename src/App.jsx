@@ -32,9 +32,14 @@ const App = () => {
           },
         })
         .then(res => {
+          console.log(res)
           setUserData({
-            name: res.data.name,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
             email: res.data.email,
+            city: res.data.city,
+            gender: res.data.gender,
+            phone: res.data.phone,
             role: res.data.role,
           })
         })

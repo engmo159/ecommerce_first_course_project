@@ -5,20 +5,17 @@ const Products = () => {
   const { products, getAllProducts } = useProducts()
   getAllProducts()
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-2 mt-2'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-28 mx-16 my-16'>
       {products.map(
-        (
-          { name, description, price, discountPercentage, rating, thumbnail },
-          index
-        ) => (
+        ({ _id, title, description, price, rating, image }, index) => (
           <ProductCard
             key={index}
-            name={name}
+            title={title}
             description={description}
             price={price}
-            discountPercentage={discountPercentage}
             rating={rating}
-            thumbnail={thumbnail}
+            image={image}
+            _id={_id}
           />
         )
       )}

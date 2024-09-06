@@ -1,7 +1,17 @@
 import { useState } from 'react'
 import { AuthContext } from './AuthContext'
 const AuthProvider = ({ children }) => {
-  const [userData, setUserData] = useState({ name: '', email: '', role: '' })
+  const initialUserState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    city: '',
+    gender: '',
+    phone: '',
+    role: '',
+  }
+  const [userData, setUserData] = useState(initialUserState)
   const [token, setToken] = useState(
     localStorage.getItem('token') ? localStorage.getItem('token') : ''
   )
@@ -12,9 +22,8 @@ const AuthProvider = ({ children }) => {
   }
   const logout = () => {
     localStorage.removeItem('token')
-    localStorage.removeItem('userName')
     setToken('')
-    setUserData({ name: '', email: '', role: '' })
+    setUserData(initialUserState)
   }
   const isAuthenticated = !!token
   return (
@@ -26,5 +35,3 @@ const AuthProvider = ({ children }) => {
   )
 }
 export default AuthProvider
-
-

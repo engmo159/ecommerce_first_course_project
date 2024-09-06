@@ -11,7 +11,11 @@ module.exports = withMT({
     './node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero-1': "url('/img/hero/hero-1.jpg')",
+      },
+    },
   },
   plugins: [],
 })

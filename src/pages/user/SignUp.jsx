@@ -2,8 +2,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import {
   Card,
   Input,
@@ -11,65 +9,68 @@ import {
   Button,
   Typography,
   Spinner,
+  Select,
+  Option,
 } from '@material-tailwind/react'
 import HelperText from '../../components/user/HelperText'
 import { useAuth } from '../../context/Auth/AuthContext'
 
 const SignUp = ({ theme }) => {
   // states
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorName, setErrorName] = useState(false)
-  const [errorEmail, setErrorEmail] = useState(false)
-  const [errorPassword, setErrorPassword] = useState(false)
+  const initialUserInfo = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    city: '',
+    gender: 'male',
+    phone: '',
+  }
+  const initialError = {
+    errName: false,
+    errEmail: false,
+    errPassword: false,
+  }
+  const [userInfo, setUserInfo] = useState(initialUserInfo)
+  const [err, setErr] = useState(initialError)
   const [isChecked, setIsChecked] = useState(false)
   const [checkBoxColor, setCheckBoxColor] = useState('gray')
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   //   other variables && hooks
   const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  const userInfo = { name, email, password }
+  // const userInfo = { name, email, password }
   const navigate = useNavigate()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
   const { login } = useAuth()
   // submit function
   const submitHandler = e => {
     e.preventDefault()
-
-    setErrorName(false)
-    setErrorEmail(false)
-    setErrorPassword(false)
+    setErr({})
     setCheckBoxColor('gray')
     setErrorMsg('')
-    if (name.length < 3) {
-      setErrorName(true)
-    } else if (!regexp.test(email)) {
-      setErrorEmail(true)
-    } else if (password.length < 6) {
-      setErrorPassword(true)
+    if (userInfo.firstName.length < 3) {
+      setErr({ ...err, errName: true })
+    } else if (!regexp.test(userInfo.email)) {
+      setErr({ ...err, errEmail: true })
+    } else if (userInfo.password.length < 6) {
+      setErr({ ...err, errPassword: true })
     } else if (!isChecked) {
       setCheckBoxColor('red')
     } else {
       setLoading(true)
       axios
-        .post('https://form-project-backend.vercel.app/user/register', userInfo)
+        .post(`${import.meta.env.VITE_BACKEND_URL}/user/register`, userInfo)
         .then(res => {
-          toast.success('You Successfully Registered')
-          setTimeout(() => {
-            navigate('/')
-          }, 5000)
-
-          console.log(res)
-          const token = res.data
+          navigate('/')
           if (!res) {
             setErrorMsg('incorrect token')
-            return
           }
-          login(email, token)
+          login(res.data)
         })
         .catch(err => {
-          setErrorMsg(err.code)
+          console.log(err)
+          setErrorMsg(err.response.data)
         })
         .finally(() => setLoading(false))
     }
@@ -79,57 +80,102 @@ const SignUp = ({ theme }) => {
     <Card
       color='transparent'
       shadow={false}
-      className='flex items-center mt-4 text-black dark:text-white'
+      className='flex  items-center mt-4 text-black dark:text-white w-full'
     >
-      <ToastContainer />
       <Typography variant='h4'>Sign Up</Typography>
       <Typography color={'gray'} className='mt-1 font-normal'>
         Nice to meet you! Enter your details to register.
       </Typography>
       <form
-        className='mt-8 mb-2 w-80 max-w-screen-lg sm:w-96'
+        className='mt-8 mb-2 md:w-1/2 max-w-screen-lg flex flex-col gap-4'
         onSubmit={submitHandler}
       >
         <div>
           <h3 className='text-center text-red-900'>{errorMsg}</h3>
         </div>
-        <div className='mb-1 flex flex-col gap-6'>
-          <div>
+        <div className='flex  justify-evenly gap-2'>
+          <div className='w-full'>
             <Input
-              label='Username'
-              value={name}
-              onChange={e => setName(e.target.value)}
-              error={errorName}
+              label='FirstName'
+              value={userInfo.firstName}
+              onChange={e =>
+                setUserInfo({ ...userInfo, firstName: e.target.value })
+              }
+              error={err.errName}
               color={colorTheme}
             />
-            <HelperText text='user name must be 3 characters at least' />
+            <HelperText text='* user name must be 3 characters at least' />
           </div>
+          <div className='w-full'>
+            <Input
+              label='LastName'
+              value={userInfo.lastName}
+              onChange={e =>
+                setUserInfo({ ...userInfo, lastName: e.target.value })
+              }
+              color={colorTheme}
+            />
+          </div>
+        </div>
+        <div className='flex flex-col gap-4'>
           <div>
             <Input
               label='Email'
-              value={email}
-              onChange={e => {
-                setEmail(e.target.value)
-                setErrorMsg('')
-              }}
-              error={errorEmail}
+              value={userInfo.email}
+              onChange={e =>
+                setUserInfo({ ...userInfo, email: e.target.value })
+              }
+              error={err.errEmail}
               color={colorTheme}
             />
-            <HelperText text='email must contain @ ' />
+            <HelperText text='* email must contain @ ' />
           </div>
           <div>
             <Input
               label='Password'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              error={errorPassword}
+              value={userInfo.password}
+              onChange={e =>
+                setUserInfo({ ...userInfo, password: e.target.value })
+              }
+              error={err.errPassword}
               type='password'
               color={colorTheme}
             />
             <HelperText text='password must be more than 5 characters' />
           </div>
         </div>
-
+        <div className='flex  justify-evenly gap-2'>
+          <div className='w-full'>
+            <Input
+              label='City'
+              value={userInfo.city}
+              onChange={e => setUserInfo({ ...userInfo, city: e.target.value })}
+              color={colorTheme}
+            />
+          </div>
+          <div className='w-full'>
+            <Select
+              label='Select Gender'
+              value={userInfo.gender}
+              onChange={val => setUserInfo({ ...userInfo, gender: val })}
+            >
+              <Option selected value='male'>
+                Male
+              </Option>
+              <Option value='female'>Female</Option>
+            </Select>
+          </div>
+          <div className='w-full'>
+            <Input
+              label='PhoneNumber'
+              value={userInfo.phone}
+              onChange={e =>
+                setUserInfo({ ...userInfo, phone: e.target.value })
+              }
+              color={colorTheme}
+            />
+          </div>
+        </div>
         <Checkbox
           checked={isChecked}
           onChange={e => setIsChecked(e.target.checked)}

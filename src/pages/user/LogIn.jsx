@@ -101,7 +101,7 @@ const LogIn = ({ theme }) => {
           fullWidth
           type='submit'
           disabled={loading}
-          color={'teal'}
+          color={'indigo'}
         >
           {loading ? <Spinner color='amber' /> : 'Sign In'}
         </Button>
@@ -109,7 +109,7 @@ const LogIn = ({ theme }) => {
           Don&apos;t have an account?
           <Link
             to={'/signup'}
-            className='font-medium text-gray-900 dark:text-gray-300 hover:text-teal-700 text-lg ml-2 transition-all'
+            className='font-medium text-gray-900 dark:text-gray-300 hover:text-blue-700 text-lg ml-2 transition-all'
           >
             Sign Up
           </Link>

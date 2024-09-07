@@ -38,7 +38,10 @@ const ProfileMenu = () => {
             size='sm'
             alt={userData.email || ''}
             className='border border-gray-900 p-0.5'
-            src='https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80'
+            src={
+              userData.image ||
+              'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
+            }
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -52,7 +55,7 @@ const ProfileMenu = () => {
         {userData.role == 'admin' && (
           <MenuItem
             onClick={closeMenu}
-            className={`flexitems-center gap-2 rounded `}
+            className={`flex items-center gap-2 rounded `}
           >
             <Typography
               as='span'
@@ -67,7 +70,7 @@ const ProfileMenu = () => {
 
         <MenuItem
           onClick={closeMenu}
-          className={`flexitems-center gap-2 rounded `}
+          className={`flex items-center gap-2 rounded `}
         >
           <Typography
             as='span'

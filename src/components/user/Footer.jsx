@@ -48,6 +48,9 @@ const Footer = () => {
           </li>
         </ul>
       </div>
+      <div className='flex justify-center my-2'>
+        <img src='/img/payment.png' />
+      </div>
       <hr className='my-8 border-blue-gray-50' />
       <Typography color='gray' className='text-center font-normal'>
         &copy; 2024 E-Commerce

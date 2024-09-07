@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 import {
   Card,
@@ -13,29 +14,34 @@ import { useAuth } from '../../context/Auth/AuthContext'
 
 const LogIn = ({ theme }) => {
   // states
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorEmail, setErrorEmail] = useState(false)
-  const [errorPassword, setErrorPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [userInfo, setUserInfo] = useState({ email: '', password: '' })
+  const [errorSign, setErrorSign] = useState({
+    errorEmail: false,
+    errorPassword: false,
+  })
+
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   //   other variables  && hooks
   // eslint-disable-next-line no-useless-escape
   const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  const userInfo = { email, password }
+
   const navigate = useNavigate()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
   const { login } = useAuth()
   // submit function
   const submitHandler = e => {
     e.preventDefault()
-    setErrorEmail(false)
-    setErrorPassword(false)
+    setErrorSign({
+      errorEmail: false,
+      errorPassword: false,
+    })
     setErrorMsg('')
-    if (!regexp.test(email)) {
-      setErrorEmail(true)
-    } else if (password.length < 6) {
-      setErrorPassword(true)
+    if (!regexp.test(userInfo.email)) {
+      setErrorSign({ ...errorSign, errorEmail: true })
+    } else if (userInfo.password.length < 6) {
+      setErrorSign({ ...errorSign, errorPassword: true })
     } else {
       setLoading(true)
       axios
@@ -78,22 +84,41 @@ const LogIn = ({ theme }) => {
         <div className='mb-1 flex flex-col gap-6'>
           <Input
             label='Email'
-            value={email}
+            value={userInfo.email}
             onChange={e => {
-              setEmail(e.target.value)
+              setUserInfo({ ...userInfo, email: e.target.value })
+              setErrorSign({ ...errorSign, errorEmail: false })
               setErrorMsg('')
             }}
-            error={errorEmail}
+            error={errorSign.errorEmail}
             color={colorTheme}
           />
-          <Input
-            label='Password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            error={errorPassword}
-            type='password'
-            color={colorTheme}
-          />
+          <div className='relative'>
+            <Input
+              label='Password'
+              value={userInfo.password}
+              onChange={e => {
+                setUserInfo({ ...userInfo, password: e.target.value })
+                setErrorMsg('')
+              }}
+              error={errorSign.errorPassword}
+              type={showPassword ? 'text' : 'password'}
+              color={colorTheme}
+            />
+            {showPassword ? (
+              <FaEyeSlash
+                className='absolute transform -translate-y-1/2 top-1/2 right-2 text-xl'
+                color='blue'
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            ) : (
+              <FaEye
+                className='absolute transform -translate-y-1/2 top-1/2 right-2 text-xl'
+                color='blue'
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            )}
+          </div>
         </div>
 
         <Button

@@ -18,4 +18,9 @@ module.exports = withMT({
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      opacity: ['disabled'],
+    },
+  },
 })

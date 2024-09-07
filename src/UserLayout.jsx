@@ -8,6 +8,7 @@ import NotFound from './pages/user/NotFound'
 import BlindingBar from './components/user/BlindingBar'
 import Cart from './pages/user/Cart'
 import Footer from './components/user/Footer'
+import CheckOut from './pages/user/CheckOut'
 
 const UserLayout = ({ theme, setTheme }) => {
   return (
@@ -18,6 +19,7 @@ const UserLayout = ({ theme, setTheme }) => {
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<Products />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<CheckOut />} />
         <Route path='/login' element={<LogIn theme={theme} />} />
         <Route path='/signup' element={<SignUp theme={theme} />} />
         <Route path='/*' element={<NotFound />} />

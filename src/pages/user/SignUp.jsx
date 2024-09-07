@@ -25,6 +25,8 @@ const SignUp = ({ theme }) => {
     city: '',
     gender: 'male',
     phone: '',
+    image: '',
+    role: 'user',
   }
   const initialError = {
     errName: false,
@@ -39,7 +41,6 @@ const SignUp = ({ theme }) => {
   const [errorMsg, setErrorMsg] = useState('')
   //   other variables && hooks
   const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  // const userInfo = { name, email, password }
   const navigate = useNavigate()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
   const { login } = useAuth()
@@ -157,7 +158,16 @@ const SignUp = ({ theme }) => {
             <Select
               label='Select Gender'
               value={userInfo.gender}
-              onChange={val => setUserInfo({ ...userInfo, gender: val })}
+              onChange={val =>
+                setUserInfo({
+                  ...userInfo,
+                  gender: val,
+                  image:
+                    val == 'male'
+                      ? 'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
+                      : 'https://img.freepik.com/free-vector/woman-with-long-brown-hair-pink-shirt_90220-2940.jpg?t=st=1725675497~exp=1725679097~hmac=6525c0ab8754722d5d49af16b851ba4cfb611f06b073964f8975af7953025760&w=740',
+                })
+              }
             >
               <Option selected value='male'>
                 Male
@@ -188,11 +198,10 @@ const SignUp = ({ theme }) => {
           containerProps={{ className: '-ml-2.5' }}
         />
         <Button
-          className='mt-4 text-lg font-normal'
+          className='mt-4 text-lg font-normal bg-blue-800 hover:bg-blue-900 transition-all'
           fullWidth
           type='submit'
           disabled={loading}
-          color={'teal'}
         >
           {loading ? <Spinner color='amber' /> : 'Sign Up'}
         </Button>
@@ -200,7 +209,7 @@ const SignUp = ({ theme }) => {
           Already have an account?
           <Link
             to={'/login'}
-            className='font-medium text-gray-900 dark:text-gray-300 hover:text-teal-700 text-lg ml-2 transition-all'
+            className='font-medium text-gray-900 dark:text-gray-300 hover:text-blue-700 text-lg ml-2 transition-all'
           >
             Sign In
           </Link>

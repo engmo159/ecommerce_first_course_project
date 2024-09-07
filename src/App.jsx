@@ -40,6 +40,7 @@ const App = () => {
             city: res.data.city,
             gender: res.data.gender,
             phone: res.data.phone,
+            image: res.data.image,
             role: res.data.role,
           })
         })

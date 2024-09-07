@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     city: '',
     gender: '',
     phone: '',
+    image: '',
     role: '',
   }
   const [userData, setUserData] = useState(initialUserState)

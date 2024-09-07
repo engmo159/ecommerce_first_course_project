@@ -1,12 +1,11 @@
 import { Button, Typography } from '@material-tailwind/react'
 import { useCart } from '../../context/cart/CartContext'
 import { MdDelete } from 'react-icons/md'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const FullCart = ({ productId, title, image, price, quantity }) => {
-  const { updateItemsInCart, deleteItemInCart } = useCart()
-  const total = (price * quantity).toFixed(2)
-
+  const { updateItemsInCart, deleteItemInCart, fetchCartData } = useCart()
+  const [disabled, setDisabled] = useState(false)
   const handleQuantity = (productId, newQuantity) => {
     if (newQuantity < 1) return
     updateItemsInCart({ productId, quantity: newQuantity })
@@ -15,14 +14,15 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
     deleteItemInCart(productId)
   }
   useEffect(() => {
-    console.log(quantity)
+    fetchCartData()
+    quantity < 2 ? setDisabled(true) : setDisabled(false)
   }, [quantity])
 
   return (
-    <div>
+    <div className='flex flex-col gap-8 m-4'>
       <div className='flex justify-evenly items-center'>
-        <img src={image} className='w-32' alt={title} />
-        <Typography variant='h5' color='gray' className='text-lg uppercase '>
+        <img src={image} className='w-28' alt={title} />
+        <Typography variant='h5' color='gray' className='text-md uppercase '>
           {title}
         </Typography>
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
@@ -33,6 +33,7 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
       <div className='flex justify-evenly items-center'>
         <Button
           color='red'
+          disabled={disabled}
           onClick={() => handleQuantity(productId, quantity - 1)}
         >
           Decrease
@@ -47,7 +48,7 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
           Increase
         </Button>
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
-          {total} $
+          {(price * quantity).toFixed(2)} $
         </Typography>
         <Button
           className='bg-transparent text-black shadow-none border-none hover:shadow-none'
@@ -56,6 +57,7 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
           <MdDelete className='text-3xl' />
         </Button>
       </div>
+      <div className='h-1 bg-gray-300 rounded'></div>
     </div>
   )
 }

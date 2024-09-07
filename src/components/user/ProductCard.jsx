@@ -20,7 +20,7 @@ const ProductCard = ({ _id, title, description, price, rating, image }) => {
   const { addItemsToCart, fetchCartData } = useCart()
 
   return (
-    <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group'>
+    <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group hover:shadow-2xl'>
       <CardHeader
         color='transparent'
         className='relative border-none shadow-none'

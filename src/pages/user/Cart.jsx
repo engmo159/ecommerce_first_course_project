@@ -1,16 +1,12 @@
 import { Typography, Button } from '@material-tailwind/react'
 import { FaCreditCard } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
 import { useCart } from '../../context/cart/CartContext'
 import EmptyCart from '../../components/user/EmptyCart'
 import FullCart from '../../components/user/FullCart'
 import { MdDelete } from 'react-icons/md'
-import { useAuth } from '../../context/Auth/AuthContext'
 
 const Cart = () => {
   const { cartItems, totalAmount, clearCartHandler } = useCart()
-  const { isAuthenticated } = useAuth()
-
   return (
     <div className='text-center flex justify-evenly min-h-screen gap-16 mx-8'>
       {cartItems.length == 0 ? (
@@ -36,7 +32,7 @@ const Cart = () => {
             </div>
           </Button>
           {cartItems.map(
-            ({ productId, title, quantity, image, price }, index) => (
+            ({ productId, title, quantity, image, price, stock }, index) => (
               <div key={index}>
                 <FullCart
                   productId={productId}
@@ -44,6 +40,7 @@ const Cart = () => {
                   title={title}
                   quantity={quantity}
                   image={image}
+                  stock={stock}
                 />
               </div>
             )
@@ -65,24 +62,14 @@ const Cart = () => {
             </Typography>
             <FaCreditCard className='text-2xl' />
           </div>
-          {cartItems.length === 0 ? (
-            <Button
-              color='green'
-              className='text-lg text-center items-center w-full'
-              disabled={true}
-            >
-              CheckOut
-            </Button>
-          ) : (
-            <Link to={isAuthenticated ? '/checkout' : '/login'}>
-              <Button
-                color='green'
-                className='text-lg text-center items-center w-full'
-              >
-                CheckOut
-              </Button>
-            </Link>
-          )}
+
+          <Button
+            color='green'
+            className='text-lg text-center items-center w-full'
+            disabled={cartItems.length == 0 ? true : false}
+          >
+            CheckOut
+          </Button>
         </div>
       </div>
     </div>

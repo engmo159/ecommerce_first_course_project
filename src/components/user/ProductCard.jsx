@@ -10,14 +10,23 @@ import { Rating, ThinStar } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 import { CiShoppingCart } from 'react-icons/ci'
 import { useCart } from '../../context/cart/CartContext'
+// rating styles
 const myStyles = {
   itemShapes: ThinStar,
   activeFillColor: '#ffb700',
   inactiveFillColor: '#fbf1a9',
 }
-const ProductCard = ({ _id, title, description, price, rating, image }) => {
+const ProductCard = ({
+  _id,
+  title,
+  description,
+  price,
+  rating,
+  image,
+  stock,
+}) => {
   const [starRating, setStarRating] = useState(Math.round(rating.rate))
-  const { addItemsToCart, fetchCartData } = useCart()
+  const { addItemsToCart } = useCart()
 
   return (
     <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group hover:shadow-2xl'>
@@ -33,7 +42,6 @@ const ProductCard = ({ _id, title, description, price, rating, image }) => {
             className=' rounded-none bg-transparent text-green-800 font-bold text-md border-none shadow-none hover:shadow-none'
             onClick={() => {
               addItemsToCart(_id)
-              fetchCartData()
             }}
           >
             + Add to cart
@@ -62,9 +70,21 @@ const ProductCard = ({ _id, title, description, price, rating, image }) => {
           onChange={setStarRating}
           transition='zoom'
         />
-        <Typography variant='h6' color='gray' className='font-bold  text-lg'>
-          {price}$
-        </Typography>
+        <div className='flex justify-evenly'>
+          <Typography variant='h6' color='gray' className='font-bold  text-lg'>
+            {price}$
+          </Typography>
+          <Typography variant='h6' color='gray' className='font-bold'>
+            stock:
+            <span
+              className={`${
+                stock < 3 ? `text-red-700` : `text-green-700`
+              }  text-lg font-bold`}
+            >
+              {stock}
+            </span>
+          </Typography>
+        </div>
       </CardBody>
     </Card>
   )

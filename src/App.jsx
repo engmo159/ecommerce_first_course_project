@@ -4,10 +4,9 @@ import UserLayout from './UserLayout'
 import AdminLayout from './AdminLayout'
 import { useAuth } from './context/Auth/AuthContext'
 import LogIn from './pages/user/LogIn'
-import axios from 'axios'
 
 const App = () => {
-  const { userData, token, setUserData } = useAuth()
+  const { userData } = useAuth()
 
   // dark light theme setup
   const [theme, setTheme] = useState('')
@@ -22,35 +21,7 @@ const App = () => {
       setTheme('light')
     }
   }, [theme])
-  // user information fetching
-  const getUserInfo = () => {
-    if (token) {
-      axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/user/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(res => {
-          console.log(res)
-          setUserData({
-            firstName: res.data.firstName,
-            lastName: res.data.lastName,
-            email: res.data.email,
-            city: res.data.city,
-            gender: res.data.gender,
-            phone: res.data.phone,
-            image: res.data.image,
-            role: res.data.role,
-          })
-        })
-        .catch(error => console.error('Error fetching user data:', error))
-    }
-  }
 
-  useEffect(() => {
-    getUserInfo()
-  }, [token])
   return (
     <div
       className={`${

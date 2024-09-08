@@ -72,14 +72,16 @@ const ProfileMenu = () => {
           onClick={closeMenu}
           className={`flex items-center gap-2 rounded `}
         >
-          <Typography
-            as='span'
-            variant='small'
-            className='font-normal'
-            color={'inherit'}
-          >
-            My Profile
-          </Typography>
+          <Link to={'/profile'}>
+            <Typography
+              as='span'
+              variant='small'
+              className='font-normal'
+              color={'inherit'}
+            >
+              My Profile
+            </Typography>
+          </Link>
         </MenuItem>
         <MenuItem
           onClick={logOutHandler}

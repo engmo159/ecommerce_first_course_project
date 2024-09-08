@@ -1,11 +1,10 @@
 import { Button, Typography } from '@material-tailwind/react'
 import { useCart } from '../../context/cart/CartContext'
 import { MdDelete } from 'react-icons/md'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-const FullCart = ({ productId, title, image, price, quantity }) => {
+const FullCart = ({ productId, title, image, price, quantity, stock }) => {
   const { updateItemsInCart, deleteItemInCart, fetchCartData } = useCart()
-  const [disabled, setDisabled] = useState(false)
   const handleQuantity = (productId, newQuantity) => {
     if (newQuantity < 1) return
     updateItemsInCart({ productId, quantity: newQuantity })
@@ -15,7 +14,6 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
   }
   useEffect(() => {
     fetchCartData()
-    quantity < 2 ? setDisabled(true) : setDisabled(false)
   }, [quantity])
 
   return (
@@ -33,7 +31,7 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
       <div className='flex justify-evenly items-center'>
         <Button
           color='red'
-          disabled={disabled}
+          disabled={quantity == 1}
           onClick={() => handleQuantity(productId, quantity - 1)}
         >
           Decrease
@@ -44,6 +42,7 @@ const FullCart = ({ productId, title, image, price, quantity }) => {
         <Button
           color='green'
           onClick={() => handleQuantity(productId, quantity + 1)}
+          disabled={quantity >= stock}
         >
           Increase
         </Button>

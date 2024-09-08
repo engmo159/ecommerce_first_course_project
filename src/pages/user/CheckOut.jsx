@@ -7,7 +7,10 @@ const CheckOut = () => {
   const { userData } = useAuth()
   return (
     <div>
-      <Typography variant='h2' className='text-4xl text-teal-800'>
+      <Typography
+        variant='h2'
+        className='text-4xl text-center text-teal-800 mt-4'
+      >
         Check Out
       </Typography>
       <div className='flex justify-evenly items-center'>
@@ -36,13 +39,35 @@ const CheckOut = () => {
           </Button>
         </form>
         {/* checkout box */}
-        <div className='bg-teal-500 flex flex-col gap-4 p-4 rounded'>
-          <div className='flex justify-between'>
-            <Typography variant='h5' color='white' className=''>
+        <div className='bg-teal-700 flex flex-col gap-12 p-4 rounded-3xl  '>
+          <div className='flex justify-between '>
+            <Typography variant='h5' color='white' className='text-md'>
               Total Price
             </Typography>
             <Typography variant='h5' color='white' className='text-2xl'>
               {totalAmount.toFixed(2)} $
+            </Typography>
+          </div>
+          <div className='flex justify-between'>
+            <Typography variant='h5' color='white' className='text-md'>
+              Taxes
+            </Typography>
+            <Typography variant='h5' color='white' className='text-2xl'>
+              {(totalAmount * 0.1).toFixed(2)} $
+            </Typography>
+          </div>
+          <div className='flex justify-between gap-24'>
+            <Typography variant='h5' color='white' className='text-md'>
+              Promo Code
+            </Typography>
+            <Input disabled />
+          </div>
+          <div className='flex justify-between '>
+            <Typography variant='h5' color='white' className='text-md'>
+              Total Amount
+            </Typography>
+            <Typography variant='h5' color='white' className='text-2xl'>
+              {(totalAmount * 1.1).toFixed(2)} $
             </Typography>
           </div>
         </div>

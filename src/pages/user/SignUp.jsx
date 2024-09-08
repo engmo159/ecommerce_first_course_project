@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import {
   Card,
@@ -44,6 +44,16 @@ const SignUp = ({ theme }) => {
   const navigate = useNavigate()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
   const { login } = useAuth()
+  // update image info
+  useEffect(() => {
+    setUserInfo(prevUserInfo => ({
+      ...prevUserInfo,
+      image:
+        prevUserInfo.gender === 'male'
+          ? 'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
+          : 'https://img.freepik.com/free-vector/woman-with-long-brown-hair-pink-shirt_90220-2940.jpg?t=st=1725675497~exp=1725679097~hmac=6525c0ab8754722d5d49af16b851ba4cfb611f06b073964f8975af7953025760&w=740',
+    }))
+  }, [userInfo.gender])
   // submit function
   const submitHandler = e => {
     e.preventDefault()
@@ -162,10 +172,6 @@ const SignUp = ({ theme }) => {
                 setUserInfo({
                   ...userInfo,
                   gender: val,
-                  image:
-                    val == 'male'
-                      ? 'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
-                      : 'https://img.freepik.com/free-vector/woman-with-long-brown-hair-pink-shirt_90220-2940.jpg?t=st=1725675497~exp=1725679097~hmac=6525c0ab8754722d5d49af16b851ba4cfb611f06b073964f8975af7953025760&w=740',
                 })
               }
             >

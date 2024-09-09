@@ -63,7 +63,7 @@ const ProfileMenu = () => {
               className='font-normal'
               color={'teal'}
             >
-              <Link to={'/admin/products'}> Admin Dashboard</Link>
+              <Link to={'/admin'}> Admin Dashboard</Link>
             </Typography>
           </MenuItem>
         )}

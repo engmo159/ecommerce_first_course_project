@@ -15,9 +15,25 @@ const AuthProvider = ({ children }) => {
   }
 
   const [userData, setUserData] = useState(initialUserState)
+  const [lastUser, setLastUser] = useState(initialUserState)
+  const [allUsersInfo, setAllUsersInfo] = useState([])
   const [token, setToken] = useState(
     localStorage.getItem('token') ? localStorage.getItem('token') : ''
   )
+  // get all user info
+  const getAllUsers = () => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/user/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        console.log(res)
+        setAllUsersInfo(res.data)
+      })
+      .catch(error => console.error('Error fetching users:', error))
+  }
 
   // user information fetching
   const getUserInfo = () => {
@@ -59,7 +75,22 @@ const AuthProvider = ({ children }) => {
         }
       })
   }
-
+  // get last registered user
+  const getLastUser = token => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/user/last-user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        console.log('Last registered user:', res.data)
+        setLastUser(res.data)
+      })
+      .catch(error => {
+        console.error('Error fetching last registered user:', error)
+      })
+  }
   const login = token => {
     setToken(token)
     localStorage.setItem('token', token)
@@ -83,6 +114,9 @@ const AuthProvider = ({ children }) => {
         userData,
         getUserInfo,
         UpdateUserInfo,
+        getAllUsers,
+        allUsersInfo,
+        getLastUser,lastUser
       }}
     >
       {children}

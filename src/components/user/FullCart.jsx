@@ -49,6 +49,10 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
           {(price * quantity).toFixed(2)} $
         </Typography>
+        <Typography variant='h5' color='gray' className='text-red-400'>
+          <span className='text-sm text-gray-500'>items left :</span>
+          {stock - quantity}
+        </Typography>
         <Button
           className='bg-transparent text-black shadow-none border-none hover:shadow-none'
           onClick={() => removeItemHandler(productId)}

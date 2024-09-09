@@ -2,10 +2,10 @@ import { createContext, useContext } from 'react'
 
 export const ProductsContext = createContext({
   products: [],
-  setProducts: () => {},
   product: {},
-  setProduct: () => {},
+  lastProduct: {},
   getProductById: () => {},
   getAllProducts: () => {},
+  getLastProduct: () => {},
 })
 export const useProducts = () => useContext(ProductsContext)

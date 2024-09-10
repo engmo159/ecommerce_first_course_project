@@ -36,7 +36,7 @@ const App = () => {
 
         <Route
           path='/admin/*'
-          element={userData.role == 'admin' ? <AdminLayout /> : <LogIn />}
+          element={userData?.role == 'admin' ? <AdminLayout /> : <LogIn />}
         />
       </Routes>
     </div>

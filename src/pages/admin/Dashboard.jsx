@@ -2,6 +2,7 @@ import { Button, Typography } from '@material-tailwind/react'
 import { useAuth } from '../../context/Auth/AuthContext'
 import { useEffect } from 'react'
 import { useProducts } from '../../context/Products/ProductsContext'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
   const { allUsersInfo, lastUser, getAllUsers, getLastUser } = useAuth()
@@ -41,7 +42,9 @@ const Dashboard = () => {
             {lastUser?.firstName || 'NA'}
           </span>
         </Typography>
-        <Button className='bg-blue-800 text-black text-sm'>Show Users</Button>
+        <Link to={'/admin/users'}>
+          <Button className='bg-blue-800 text-black text-sm'>Show Users</Button>
+        </Link>
       </div>
       {/* product box */}
       <div className='bg-[#05081c] flex flex-col justify-evenly items-center gap-8 p-8 rounded-xl flex-1'>
@@ -66,13 +69,14 @@ const Dashboard = () => {
         >
           Last product added :
           <span className='text-light-green-800'>
-            {lastProduct?.title.slice(0, 10) || 'NA'}
+            {lastProduct?.title?.slice(0, 10) || 'NA'}
           </span>
         </Typography>
-
-        <Button className='bg-blue-800 text-black text-sm'>
-          Show Products
-        </Button>
+        <Link to={'/admin/products'}>
+          <Button className='bg-blue-800 text-black text-sm'>
+            Show Products
+          </Button>
+        </Link>
       </div>
     </div>
   )

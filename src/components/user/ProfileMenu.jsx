@@ -32,14 +32,14 @@ const ProfileMenu = () => {
           color='blue-gray'
           className='flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto'
         >
-          <Typography>{userData.email}</Typography>
+          <Typography>{userData?.email}</Typography>
           <Avatar
             variant='circular'
             size='sm'
-            alt={userData.email || ''}
+            alt={userData?.email || ''}
             className='border border-gray-900 p-0.5'
             src={
-              userData.image ||
+              userData?.image ||
               'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
             }
           />
@@ -52,7 +52,7 @@ const ProfileMenu = () => {
         </Button>
       </MenuHandler>
       <MenuList className='p-1'>
-        {userData.role == 'admin' && (
+        {userData?.role == 'admin' && (
           <MenuItem
             onClick={closeMenu}
             className={`flex items-center gap-2 rounded `}

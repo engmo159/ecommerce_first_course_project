@@ -7,15 +7,16 @@ import AuthProvider from './context/Auth/AuthProvidor'
 import ProductsProvider from './context/Products/ProductsProvidor'
 import CartProvider from './context/cart/CartProvider.jsx'
 createRoot(document.getElementById('root')).render(
-  <AuthProvider>
-    <ProductsProvider>
-      <CartProvider>
-        <ThemeProvider>
-          <BrowserRouter>
+  <BrowserRouter>
+    {' '}
+    <AuthProvider>
+      <ProductsProvider>
+        <CartProvider>
+          <ThemeProvider>
             <App />
-          </BrowserRouter>
-        </ThemeProvider>
-      </CartProvider>
-    </ProductsProvider>
-  </AuthProvider>
+          </ThemeProvider>
+        </CartProvider>
+      </ProductsProvider>
+    </AuthProvider>{' '}
+  </BrowserRouter>
 )

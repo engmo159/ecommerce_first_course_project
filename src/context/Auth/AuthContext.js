@@ -12,5 +12,6 @@ export const AuthContext = createContext({
   UpdateUserInfo: () => {},
   getAllUsers: () => {},
   getLastUser: () => {},
+  changeUserRole: () => {},
 })
 export const useAuth = () => useContext(AuthContext)

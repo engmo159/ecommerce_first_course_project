@@ -1,35 +1,15 @@
 import { useState } from 'react'
-import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
 import { Card, Input, Button, Typography } from '@material-tailwind/react'
-import { useNavigate } from 'react-router-dom'
+import { useProducts } from '../../../context/Products/ProductsContext'
 
 const AddProduct = () => {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState(0)
-  const [stock, setStock] = useState(0)
-  const [thumbnail, setThumbnail] = useState('')
-  const navigate = useNavigate()
+  const [newProduct, setNewProduct] = useState({})
+  const { addNewProduct } = useProducts()
 
   const submitHandler = e => {
     e.preventDefault()
-
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/product/add`, {
-        name,
-        description,
-        price,
-        stock,
-        thumbnail,
-      })
-      .then(res => {
-        console.log(res.data)
-      })
-      .finally(() => {
-        navigate('/admin/products')
-      })
-      .catch(err => console.error(err))
+    addNewProduct(newProduct)
   }
   return (
     <Card
@@ -44,38 +24,49 @@ const AddProduct = () => {
           <div className='w-full gap-8 flex items-center'>
             <Input
               label='ProductName'
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={newProduct?.title || ''}
+              onChange={e =>
+                setNewProduct(prev => ({ ...prev, title: e.target.value }))
+              }
               color='teal'
             />
             <Input
               label='ProductDescription'
-              value={description}
-              onChange={e => setDescription(e.target.value)}
+              value={newProduct?.description || ''}
+              onChange={e =>
+                setNewProduct(prev => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
+              }
               color='teal'
             />
           </div>
           <div className='w-full gap-8 flex items-center'>
             <Input
               label='ProductPrice'
-              value={price}
-              onChange={e => setPrice(e.target.value)}
+              value={newProduct.price || ''}
+              onChange={e =>
+                setNewProduct(prev => ({ ...prev, price: e.target.value }))
+              }
               color='teal'
-              type='number'
             />
             <Input
               label='Stock'
-              value={stock}
-              onChange={e => setStock(e.target.value)}
+              value={newProduct?.stock || ''}
+              onChange={e =>
+                setNewProduct(prev => ({ ...prev, stock: e.target.value }))
+              }
               color='teal'
-              type='number'
             />
           </div>
           <div className='w-full gap-8 flex items-center'>
             <Input
               label='ProductThumbnail'
-              value={thumbnail}
-              onChange={e => setThumbnail(e.target.value)}
+              value={newProduct?.image || ''}
+              onChange={e =>
+                setNewProduct(prev => ({ ...prev, image: e.target.value }))
+              }
               color='teal'
             />
           </div>
@@ -85,7 +76,7 @@ const AddProduct = () => {
           fullWidth
           type='submit'
           color={'teal'}
-          disabled={name ? false : true}
+          disabled={newProduct?.title ? false : true}
         >
           Add Product
         </Button>

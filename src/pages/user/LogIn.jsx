@@ -38,9 +38,9 @@ const LogIn = ({ theme }) => {
       errorPassword: false,
     })
     setErrorMsg('')
-    if (!regexp.test(userInfo.email)) {
+    if (!regexp.test(userInfo?.email)) {
       setErrorSign({ ...errorSign, errorEmail: true })
-    } else if (userInfo.password.length < 6) {
+    } else if (userInfo?.password?.length < 6) {
       setErrorSign({ ...errorSign, errorPassword: true })
     } else {
       setLoading(true)
@@ -50,7 +50,7 @@ const LogIn = ({ theme }) => {
           navigate('/')
 
           console.log(res)
-          const dataToken = res.data
+          const dataToken = res?.data
           if (!res) {
             setErrorMsg('incorrect token')
             return
@@ -58,7 +58,7 @@ const LogIn = ({ theme }) => {
           login(dataToken)
         })
         .catch(err => {
-          setErrorMsg(err.response.data)
+          setErrorMsg(err?.response?.data)
         })
         .finally(() => setLoading(false))
     }

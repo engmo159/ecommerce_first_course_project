@@ -2,32 +2,24 @@ import { useEffect, useState } from 'react'
 import { AuthContext } from './AuthContext'
 import axios from 'axios'
 const AuthProvider = ({ children }) => {
-  const initialUserState = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    city: '',
-    gender: '',
-    phone: '',
-    image: '',
-    role: '',
-  }
-
-  const [userData, setUserData] = useState(initialUserState)
-  const [lastUser, setLastUser] = useState(initialUserState)
+  const [userData, setUserData] = useState(null)
+  const [lastUser, setLastUser] = useState(null)
   const [allUsersInfo, setAllUsersInfo] = useState([])
   const [token, setToken] = useState(
     localStorage.getItem('token') ? localStorage.getItem('token') : ''
   )
+
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_URL,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
   // get all user info
   const getAllUsers = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/user/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    api
+      .get(`/user/users`)
       .then(res => {
         console.log(res)
         setAllUsersInfo(res.data)
@@ -98,7 +90,21 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token')
     setToken('')
-    setUserData(initialUserState)
+    setUserData(null)
+  }
+  const changeUserRole = userId => {
+    api
+      .put(`/user/change-role/${userId}`)
+      .then(response => {
+        console.log('Role changed successfully:', response.data.users)
+        setAllUsersInfo(response.data.users)
+      })
+      .catch(error => {
+        console.error(
+          'Error changing role:',
+          error.response ? error.response.data : error.message
+        )
+      })
   }
   const isAuthenticated = !!token
   useEffect(() => {
@@ -116,7 +122,9 @@ const AuthProvider = ({ children }) => {
         UpdateUserInfo,
         getAllUsers,
         allUsersInfo,
-        getLastUser,lastUser
+        getLastUser,
+        lastUser,
+        changeUserRole,
       }}
     >
       {children}

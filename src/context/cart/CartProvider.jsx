@@ -55,15 +55,15 @@ const CartProvider = ({ children }) => {
         const cart = res.data
         const cartItemsMapping = res.data.items.map(
           ({ product, quantity }) => ({
-            productId: product._id,
-            title: product.title,
-            price: product.price,
-            description: product.description,
-            category: product.category,
-            image: product.image,
-            rating: product.rating,
-            unitPrice: product.unitPrice,
-            stock: product.stock,
+            productId: product?._id,
+            title: product?.title,
+            price: product?.price,
+            description: product?.description,
+            category: product?.category,
+            image: product?.image,
+            rating: product?.rating,
+            unitPrice: product?.unitPrice,
+            stock: product?.stock,
             quantity,
           })
         )

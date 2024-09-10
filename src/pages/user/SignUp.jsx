@@ -17,24 +17,9 @@ import { useAuth } from '../../context/Auth/AuthContext'
 
 const SignUp = ({ theme }) => {
   // states
-  const initialUserInfo = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    city: '',
-    gender: 'male',
-    phone: '',
-    image: '',
-    role: 'user',
-  }
-  const initialError = {
-    errName: false,
-    errEmail: false,
-    errPassword: false,
-  }
-  const [userInfo, setUserInfo] = useState(initialUserInfo)
-  const [err, setErr] = useState(initialError)
+
+  const [userInfo, setUserInfo] = useState(null)
+  const [err, setErr] = useState(null)
   const [isChecked, setIsChecked] = useState(false)
   const [checkBoxColor, setCheckBoxColor] = useState('gray')
   const [loading, setLoading] = useState(false)
@@ -53,14 +38,14 @@ const SignUp = ({ theme }) => {
           ? 'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
           : 'https://img.freepik.com/free-vector/woman-with-long-brown-hair-pink-shirt_90220-2940.jpg?t=st=1725675497~exp=1725679097~hmac=6525c0ab8754722d5d49af16b851ba4cfb611f06b073964f8975af7953025760&w=740',
     }))
-  }, [userInfo.gender])
+  }, [userInfo?.gender])
   // submit function
   const submitHandler = e => {
     e.preventDefault()
     setErr({})
     setCheckBoxColor('gray')
     setErrorMsg('')
-    if (userInfo.firstName.length < 3) {
+    if (userInfo?.firstName?.length < 3) {
       setErr({ ...err, errName: true })
     } else if (!regexp.test(userInfo.email)) {
       setErr({ ...err, errEmail: true })
@@ -108,11 +93,11 @@ const SignUp = ({ theme }) => {
           <div className='w-full'>
             <Input
               label='FirstName'
-              value={userInfo.firstName}
+              value={userInfo?.firstName}
               onChange={e =>
                 setUserInfo({ ...userInfo, firstName: e.target.value })
               }
-              error={err.errName}
+              error={err?.errName}
               color={colorTheme}
             />
             <HelperText text='* user name must be 3 characters at least' />
@@ -120,7 +105,7 @@ const SignUp = ({ theme }) => {
           <div className='w-full'>
             <Input
               label='LastName'
-              value={userInfo.lastName}
+              value={userInfo?.lastName}
               onChange={e =>
                 setUserInfo({ ...userInfo, lastName: e.target.value })
               }
@@ -132,11 +117,11 @@ const SignUp = ({ theme }) => {
           <div>
             <Input
               label='Email'
-              value={userInfo.email}
+              value={userInfo?.email}
               onChange={e =>
                 setUserInfo({ ...userInfo, email: e.target.value })
               }
-              error={err.errEmail}
+              error={err?.errEmail}
               color={colorTheme}
             />
             <HelperText text='* email must contain @ ' />
@@ -144,11 +129,11 @@ const SignUp = ({ theme }) => {
           <div>
             <Input
               label='Password'
-              value={userInfo.password}
+              value={userInfo?.password}
               onChange={e =>
                 setUserInfo({ ...userInfo, password: e.target.value })
               }
-              error={err.errPassword}
+              error={err?.errPassword}
               type='password'
               color={colorTheme}
             />
@@ -159,7 +144,7 @@ const SignUp = ({ theme }) => {
           <div className='w-full'>
             <Input
               label='City'
-              value={userInfo.city}
+              value={userInfo?.city}
               onChange={e => setUserInfo({ ...userInfo, city: e.target.value })}
               color={colorTheme}
             />
@@ -167,7 +152,7 @@ const SignUp = ({ theme }) => {
           <div className='w-full'>
             <Select
               label='Select Gender'
-              value={userInfo.gender}
+              value={userInfo?.gender}
               onChange={val =>
                 setUserInfo({
                   ...userInfo,
@@ -184,7 +169,7 @@ const SignUp = ({ theme }) => {
           <div className='w-full'>
             <Input
               label='PhoneNumber'
-              value={userInfo.phone}
+              value={userInfo?.phone}
               onChange={e =>
                 setUserInfo({ ...userInfo, phone: e.target.value })
               }

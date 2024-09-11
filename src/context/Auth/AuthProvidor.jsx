@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
 import { AuthContext } from './AuthContext'
+import Swal from 'sweetalert2'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const AuthProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null)
-  const [lastUser, setLastUser] = useState(null)
+  const [userData, setUserData] = useState({})
+  const [lastUser, setLastUser] = useState({})
+  const [userById, setUserById] = useState({})
   const [allUsersInfo, setAllUsersInfo] = useState([])
   const [token, setToken] = useState(
     localStorage.getItem('token') ? localStorage.getItem('token') : ''
   )
-
+  const [loading, setLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+  const navigate = useNavigate()
   const api = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URL,
     headers: {
@@ -25,6 +30,18 @@ const AuthProvider = ({ children }) => {
         setAllUsersInfo(res.data)
       })
       .catch(error => console.error('Error fetching users:', error))
+  }
+  // get user by id
+  const getUserById = userId => {
+    api
+      .get(`/user/${userId}`)
+      .then(response => {
+        console.log('User Details:', response.data)
+        setUserById(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching user:', error)
+      })
   }
 
   // user information fetching
@@ -106,6 +123,85 @@ const AuthProvider = ({ children }) => {
         )
       })
   }
+  const updateUserById = (userId, updatedUserData) => {
+    api
+      .put(`/user/update/${userId}`, updatedUserData)
+      .then(response => {
+        console.log('User updated successfully:', response.data)
+        setUserById(response.data)
+      })
+      .catch(error => {
+        console.error('Error updating user:', error)
+        throw new Error(
+          error.response ? error.response.data.message : error.message
+        )
+      })
+  }
+
+  const deleteUserById = (image, userId) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton:
+          'bg-red-700 text-white px-4 py-2 rounded hover:bg-red-900 transition-all mx-2',
+        cancelButton:
+          'bg-teal-700 text-white px-4 py-2 rounded hover:bg-teal-900 transition-all mx-2',
+      },
+      buttonsStyling: false,
+    })
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        imageUrl: `${image}`,
+        imageWidth: 150,
+
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true,
+      })
+      .then(result => {
+        if (result.isConfirmed) {
+          api
+            .delete(`user/delete-user/${userId}`)
+            .then(res => {
+              console.log(res.data)
+              setAllUsersInfo(res.data.users)
+            })
+            .finally(() => {
+              swalWithBootstrapButtons.fire({
+                title: 'Deleted!',
+                text: 'User has been deleted.',
+                icon: 'success',
+              })
+            })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: 'Cancelled',
+            text: 'Your imaginary file is safe :)',
+            icon: 'error',
+          })
+        }
+      })
+  }
+  const registerUser = (userInfo, navigatePath) => {
+    setLoading(true)
+    api
+      .post(`/user/register`, userInfo)
+      .then(res => {
+        navigate(navigatePath)
+        if (!res) {
+          setErrorMsg('incorrect token')
+        }
+        // login(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+        setErrorMsg(err.response.data)
+      })
+      .finally(() => setLoading(false))
+  }
   const isAuthenticated = !!token
   useEffect(() => {
     getUserInfo()
@@ -125,6 +221,14 @@ const AuthProvider = ({ children }) => {
         getLastUser,
         lastUser,
         changeUserRole,
+        getUserById,
+        userById,
+        updateUserById,
+        deleteUserById,
+        loading,
+        errorMsg,
+        setErrorMsg,
+        registerUser,
       }}
     >
       {children}

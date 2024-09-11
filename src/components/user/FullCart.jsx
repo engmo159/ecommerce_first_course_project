@@ -1,10 +1,9 @@
-import { Button, Typography } from '@material-tailwind/react'
+import { Button, Spinner, Typography } from '@material-tailwind/react'
 import { useCart } from '../../context/cart/CartContext'
 import { MdDelete } from 'react-icons/md'
-import { useEffect } from 'react'
 
 const FullCart = ({ productId, title, image, price, quantity, stock }) => {
-  const { updateItemsInCart, deleteItemInCart, fetchCartData } = useCart()
+  const { updateItemsInCart, deleteItemInCart, cartLoading } = useCart()
   const handleQuantity = (productId, newQuantity) => {
     if (newQuantity < 1) return
     updateItemsInCart({ productId, quantity: newQuantity })
@@ -12,9 +11,7 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
   const removeItemHandler = productId => {
     deleteItemInCart(productId)
   }
-  useEffect(() => {
-    fetchCartData()
-  }, [quantity])
+  const isLoading = cartLoading[productId] || {}
 
   return (
     <div className='flex flex-col gap-8 m-4'>
@@ -31,10 +28,10 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
       <div className='flex justify-evenly items-center'>
         <Button
           color='red'
-          disabled={quantity == 1}
+          disabled={quantity == 1 || isLoading.update}
           onClick={() => handleQuantity(productId, quantity - 1)}
         >
-          Decrease
+          {isLoading.update ? <Spinner /> : 'Decrease'}
         </Button>
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
           {quantity}
@@ -42,9 +39,9 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
         <Button
           color='green'
           onClick={() => handleQuantity(productId, quantity + 1)}
-          disabled={quantity >= stock}
+          disabled={quantity >= stock || isLoading.update}
         >
-          Increase
+          {isLoading.update ? <Spinner /> : 'Increase'}
         </Button>
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
           {(price * quantity).toFixed(2)} $
@@ -54,10 +51,11 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
           {stock - quantity}
         </Typography>
         <Button
-          className='bg-transparent text-black shadow-none border-none hover:shadow-none'
+          className='bg-transparent text-black shadow-none border-none hover:shadow-none '
           onClick={() => removeItemHandler(productId)}
+          disabled={isLoading.delete}
         >
-          <MdDelete className='text-3xl' />
+          {isLoading.delete ? <Spinner /> : <MdDelete className='text-3xl' />}
         </Button>
       </div>
       <div className='h-1 bg-gray-300 rounded'></div>

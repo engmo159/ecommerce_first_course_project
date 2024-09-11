@@ -1,7 +1,6 @@
 /* eslint-disable no-useless-escape */
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import {
   Card,
   Input,
@@ -18,17 +17,24 @@ import { useAuth } from '../../context/Auth/AuthContext'
 const SignUp = ({ theme }) => {
   // states
 
-  const [userInfo, setUserInfo] = useState(null)
-  const [err, setErr] = useState(null)
+  const [userInfo, setUserInfo] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    city: '',
+    gender: 'male',
+    phone: '',
+  })
+  const [err, setErr] = useState({})
   const [isChecked, setIsChecked] = useState(false)
   const [checkBoxColor, setCheckBoxColor] = useState('gray')
-  const [loading, setLoading] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
+
   //   other variables && hooks
   const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  const navigate = useNavigate()
+
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
-  const { login } = useAuth()
+  const { registerUser, errorMsg, setErrorMsg, loading } = useAuth()
   // update image info
   useEffect(() => {
     setUserInfo(prevUserInfo => ({
@@ -46,29 +52,15 @@ const SignUp = ({ theme }) => {
     setCheckBoxColor('gray')
     setErrorMsg('')
     if (userInfo?.firstName?.length < 3) {
-      setErr({ ...err, errName: true })
+      setErr(prevErr => ({ ...prevErr, errName: true }))
     } else if (!regexp.test(userInfo.email)) {
-      setErr({ ...err, errEmail: true })
-    } else if (userInfo.password.length < 6) {
-      setErr({ ...err, errPassword: true })
+      setErr(prevErr => ({ ...prevErr, errEmail: true }))
+    } else if (userInfo?.password?.length < 6) {
+      setErr(prevErr => ({ ...prevErr, errPassword: true }))
     } else if (!isChecked) {
       setCheckBoxColor('red')
     } else {
-      setLoading(true)
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/user/register`, userInfo)
-        .then(res => {
-          navigate('/')
-          if (!res) {
-            setErrorMsg('incorrect token')
-          }
-          login(res.data)
-        })
-        .catch(err => {
-          console.log(err)
-          setErrorMsg(err.response.data)
-        })
-        .finally(() => setLoading(false))
+      registerUser(userInfo, '/login')
     }
   }
 
@@ -151,7 +143,7 @@ const SignUp = ({ theme }) => {
           </div>
           <div className='w-full'>
             <Select
-              label='Select Gender'
+              // label='Select Gender'
               value={userInfo?.gender}
               onChange={val =>
                 setUserInfo({

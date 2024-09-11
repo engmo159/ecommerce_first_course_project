@@ -1,4 +1,4 @@
-import { Typography, Button } from '@material-tailwind/react'
+import { Typography, Button, Spinner } from '@material-tailwind/react'
 import { FaCreditCard } from 'react-icons/fa'
 import { useCart } from '../../context/cart/CartContext'
 import EmptyCart from '../../components/user/EmptyCart'
@@ -6,10 +6,11 @@ import FullCart from '../../components/user/FullCart'
 import { MdDelete } from 'react-icons/md'
 
 const Cart = () => {
-  const { cartItems, totalAmount, clearCartHandler } = useCart()
+  const { cartItems, totalAmount, clearCartHandler, clearCartLoading } =
+    useCart()
   return (
     <div className='text-center flex justify-evenly min-h-screen gap-16 mx-8'>
-      {cartItems.length == 0 ? (
+      {cartItems?.length == 0 ? (
         <EmptyCart />
       ) : (
         <div className='w-full flex flex-col justify-evenly gap-2 my-8'>
@@ -19,19 +20,24 @@ const Cart = () => {
             onClick={() => {
               clearCartHandler()
             }}
+            disabled={clearCartLoading}
           >
-            <div className='flex justify-center gap-2'>
-              <Typography
-                variant='h5'
-                color='gray'
-                className='text-lg uppercase '
-              >
-                ClearCart
-              </Typography>
-              <MdDelete className='text-3xl' />
-            </div>
+            {clearCartLoading ? (
+              <Spinner />
+            ) : (
+              <div className='flex justify-center gap-2'>
+                <Typography
+                  variant='h5'
+                  color='gray'
+                  className='text-lg uppercase '
+                >
+                  ClearCart
+                </Typography>
+                <MdDelete className='text-3xl' />
+              </div>
+            )}
           </Button>
-          {cartItems.map(
+          {cartItems?.map(
             ({ productId, title, quantity, image, price, stock }, index) => (
               <div key={index}>
                 <FullCart
@@ -46,7 +52,7 @@ const Cart = () => {
             )
           )}
           <Typography variant='h5' color='gray' className='text-2xl uppercase '>
-            total amount :{totalAmount.toFixed(2)} $
+            total amount :{(totalAmount || 0).toFixed(2)} $
           </Typography>
         </div>
       )}
@@ -58,7 +64,7 @@ const Cart = () => {
           </Typography>
           <div className='flex justify-between items-center text-gray-700'>
             <Typography variant='h5' className='text-2xl uppercase '>
-              {totalAmount.toFixed(2)} $
+              {(totalAmount || 0).toFixed(2)} $
             </Typography>
             <FaCreditCard className='text-2xl' />
           </div>
@@ -66,7 +72,7 @@ const Cart = () => {
           <Button
             color='green'
             className='text-lg text-center items-center w-full'
-            disabled={cartItems.length == 0 ? true : false}
+            disabled={cartItems?.length == 0}
           >
             CheckOut
           </Button>

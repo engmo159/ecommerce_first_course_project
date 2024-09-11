@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react'
 import { CartContext } from './CartContext'
 import axios from 'axios'
 import { useAuth } from '../Auth/AuthContext'
+
 const CartProvider = ({ children }) => {
   const { token } = useAuth()
   const [cartItems, setCartItems] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
+  const [cartLoading, setCartLoading] = useState({})
+  const [clearCartLoading, setClearCartLoading] = useState(false)
+
   // getAllCartItems
   const fetchCartData = () => {
+    setCartLoading({})
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/cart`)
       .then(res => {
@@ -24,9 +29,6 @@ const CartProvider = ({ children }) => {
             unitPrice: product?.unitPrice,
             quantity,
           })
-          // {
-          //   headers: { Authorization: `Bearer ${token}` },
-          // }
         )
         setCartItems(cartItemsMapping)
         setTotalAmount(res.data.totalAmount)
@@ -40,6 +42,10 @@ const CartProvider = ({ children }) => {
 
   // add items to cart function
   const addItemsToCart = productId => {
+    setCartLoading(prev => ({
+      ...prev,
+      [productId]: { ...prev[productId], add: true },
+    }))
     axios
       .post(
         `${import.meta.env.VITE_BACKEND_URL}/cart/items`,
@@ -71,13 +77,24 @@ const CartProvider = ({ children }) => {
         setCartItems(cartItemsMapping)
         setTotalAmount(cart.totalAmount)
       })
+
       .catch(err => console.error(err))
+      .finally(() =>
+        setCartLoading(prev => ({
+          ...prev,
+          [productId]: { ...prev[productId], add: false },
+        }))
+      )
   }
 
   // update cart
-  const updateItemsInCart = ({ productId, quantity }) => {
-    axios
-      .put(
+  const updateItemsInCart = async ({ productId, quantity }) => {
+    setCartLoading(prev => ({
+      ...prev,
+      [productId]: { ...prev[productId], update: true },
+    }))
+    try {
+      const res = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/cart/items/edit`,
         {
           productId,
@@ -87,36 +104,39 @@ const CartProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      .then(res => {
-        const cart = res.data
-        const cartItemsMapping = cart.items.map(
-          ({ product, quantity, unitPrice }) => ({
-            productId: product._id,
-            title: product.title,
-            description: product.description,
-            category: product.category,
-            image: product.image,
-            rating: product.rating,
-            stock: product.stock,
-            quantity,
-            price: unitPrice,
-          })
-        )
-
-        setCartItems(cartItemsMapping)
-        setTotalAmount(cart.totalAmount)
-      })
-      .then(() => fetchCartData())
-      .catch(err => console.error(err))
+      const cart = res.data
+      const cartItemsMapping = cart.items.map(
+        ({ product, quantity, unitPrice }) => ({
+          productId: product._id,
+          title: product.title,
+          description: product.description,
+          category: product.category,
+          image: product.image,
+          rating: product.rating,
+          stock: product.stock,
+          quantity,
+          price: unitPrice,
+        })
+      )
+      setCartItems(cartItemsMapping)
+      setTotalAmount(cart.totalAmount)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setCartLoading(prev => ({
+        ...prev,
+        [productId]: { ...prev[productId], update: false },
+      }))
+    }
   }
-
   const deleteItemInCart = productId => {
+    setCartLoading(prev => ({
+      ...prev,
+      [productId]: { ...prev[productId], delete: true },
+    }))
     axios
       .delete(
         `${import.meta.env.VITE_BACKEND_URL}/cart/items/delete/${productId}`
-        // {
-        //   headers: { Authorization: `Bearer ${token}` },
-        // }
       )
       .then(res => {
         const cart = res.data
@@ -138,21 +158,25 @@ const CartProvider = ({ children }) => {
         setTotalAmount(cart.totalAmount)
       })
       .catch(err => console.error(err))
+      .finally(() => {
+        setCartLoading(prev => {
+          const newState = { ...prev }
+          delete newState[productId]
+          return newState
+        })
+      })
   }
 
   const clearCartHandler = () => {
+    setClearCartLoading(true)
     axios
-      .delete(
-        `${import.meta.env.VITE_BACKEND_URL}/cart`
-        // {
-        //   headers: { Authorization: `Bearer ${token}` },
-        // }
-      )
+      .delete(`${import.meta.env.VITE_BACKEND_URL}/cart`)
       .then(() => {
         setCartItems([])
         setTotalAmount(0)
       })
       .catch(err => console.error(err))
+      .finally(() => setClearCartLoading(false))
   }
   return (
     <CartContext.Provider
@@ -166,6 +190,8 @@ const CartProvider = ({ children }) => {
         deleteItemInCart,
         clearCartHandler,
         fetchCartData,
+        clearCartLoading,
+        cartLoading,
       }}
     >
       {children}

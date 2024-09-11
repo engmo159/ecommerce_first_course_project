@@ -5,6 +5,7 @@ import {
   CardBody,
   Typography,
   Button,
+  Spinner,
 } from '@material-tailwind/react'
 import { Rating, ThinStar } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
@@ -26,7 +27,7 @@ const ProductCard = ({
   stock,
 }) => {
   const [starRating, setStarRating] = useState(Math.round(rating.rate))
-  const { addItemsToCart } = useCart()
+  const { addItemsToCart, cartLoading } = useCart()
 
   return (
     <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group hover:shadow-2xl'>
@@ -42,9 +43,15 @@ const ProductCard = ({
             className=' rounded-none bg-transparent text-green-800 font-bold text-md border-none shadow-none hover:shadow-none'
             onClick={() => {
               addItemsToCart(_id)
+              // console.log(cartLoading[_id])
             }}
+            disabled={cartLoading[_id]?.add}
           >
-            + Add to cart
+            {cartLoading[_id] && cartLoading[_id].add ? (
+              <Spinner />
+            ) : (
+              '+ Add to cart'
+            )}
           </Button>
           <CiShoppingCart color='blue' className='text-2xl font-bold ' />
         </div>

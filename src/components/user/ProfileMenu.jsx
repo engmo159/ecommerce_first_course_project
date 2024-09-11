@@ -32,7 +32,7 @@ const ProfileMenu = () => {
           color='blue-gray'
           className='flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto'
         >
-          <Typography>{userData?.email}</Typography>
+          <Typography>{userData?.email || ''}</Typography>
           <Avatar
             variant='circular'
             size='sm'

@@ -11,7 +11,7 @@ const ShowProduct = () => {
   useEffect(() => {
     getProductById(productId)
   }, [productId])
-
+  //TODO: COMPLETE LOADING LOGIC
   const productInfoLoading = false
 
   return (

@@ -8,6 +8,9 @@ import AddProduct from './pages/admin/productSection/AddProduct'
 import ProductDashboard from './pages/admin/productSection/ProductDashboard'
 import Dashboard from './pages/admin/Dashboard'
 import UserDashboard from './pages/admin/userSection/UserDashboard'
+import ShowUser from './pages/admin/userSection/ShowUser'
+import EditUser from './pages/admin/userSection/EditUser'
+import AddUser from './pages/admin/userSection/AddUser'
 
 const AdminLayout = () => {
   return (
@@ -19,6 +22,9 @@ const AdminLayout = () => {
         <Routes>
           {/* user routes */}
           <Route path='/users' element={<UserDashboard />} />
+          <Route path='/users/:userId' element={<ShowUser />} />
+          <Route path='/users/edit/:userId' element={<EditUser />} />
+          <Route path='/users/add' element={<AddUser />} />
 
           {/* products routes */}
           <Route path='/' element={<Dashboard />} />

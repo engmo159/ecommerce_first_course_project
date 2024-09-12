@@ -23,6 +23,7 @@ const AuthProvider = ({ children }) => {
   })
   // get all user info
   const getAllUsers = () => {
+    setLoading(true)
     api
       .get(`/user/users`)
       .then(res => {
@@ -30,9 +31,13 @@ const AuthProvider = ({ children }) => {
         setAllUsersInfo(res.data)
       })
       .catch(error => console.error('Error fetching users:', error))
+      .finally(() => setLoading(false))
   }
   // get user by id
   const getUserById = userId => {
+    setLoading(true)
+    setUserById({})
+
     api
       .get(`/user/${userId}`)
       .then(response => {
@@ -42,6 +47,7 @@ const AuthProvider = ({ children }) => {
       .catch(error => {
         console.error('Error fetching user:', error)
       })
+      .finally(() => setLoading(false))
   }
 
   // user information fetching

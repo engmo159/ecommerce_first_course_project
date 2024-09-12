@@ -6,18 +6,18 @@ import { CardSkeleton } from '../../../components/admin/CardSkeleton'
 
 const ShowProduct = () => {
   const { productId } = useParams()
-  const { getProductById, product } = useProducts()
+  const { getProductById, product, productInfoLoading } = useProducts()
 
   useEffect(() => {
     getProductById(productId)
   }, [productId])
-  //TODO: COMPLETE LOADING LOGIC
-  const productInfoLoading = false
 
   return (
     <div className='bg-blue-gray-400 pb-1'>
       {productInfoLoading ? (
-        <CardSkeleton />
+        <div className='h-[90vh] flex justify-center items-center'>
+          <CardSkeleton />
+        </div>
       ) : (
         <div className='flex flex-col gap-4 justify-center items-center w-full h-[90vh] '>
           <Card className='w-2/3  mt-16 max-w-screen-xl shadow-lg bg-gray-200'>

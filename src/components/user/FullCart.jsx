@@ -30,8 +30,9 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
           color='red'
           disabled={quantity == 1 || isLoading.update}
           onClick={() => handleQuantity(productId, quantity - 1)}
+          className='w-32 flex justify-center items-center'
         >
-          {isLoading.update ? <Spinner /> : 'Decrease'}
+          {isLoading.update ? <Spinner className='h-4 w-4' /> : 'Decrease'}
         </Button>
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
           {quantity}
@@ -40,8 +41,9 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
           color='green'
           onClick={() => handleQuantity(productId, quantity + 1)}
           disabled={quantity >= stock || isLoading.update}
+          className='w-32 flex justify-center items-center'
         >
-          {isLoading.update ? <Spinner /> : 'Increase'}
+          {isLoading.update ? <Spinner className='h-4 w-4' /> : 'Increase'}
         </Button>
         <Typography variant='h5' color='gray' className='text-2xl uppercase '>
           {(price * quantity).toFixed(2)} $

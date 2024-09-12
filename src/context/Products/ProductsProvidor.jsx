@@ -9,8 +9,8 @@ const ProductsProvider = ({ children }) => {
   const navigate = useNavigate()
   const { token } = useAuth()
   const [products, setProducts] = useState([])
-  const [product, setProduct] = useState(null)
-  const [lastProduct, setLastProduct] = useState(null)
+  const [product, setProduct] = useState({})
+  const [lastProduct, setLastProduct] = useState({})
   const [productInfoLoading, setProductInfoLoading] = useState(false)
 
   const api = axios.create({
@@ -23,7 +23,7 @@ const ProductsProvider = ({ children }) => {
 
   // get all products
   const getAllProducts = () => {
-    console.log('Fetching products...')
+    setProductInfoLoading(true)
     api
       .get(`/product`)
       .then(res => {
@@ -41,21 +41,22 @@ const ProductsProvider = ({ children }) => {
           console.error('Error setting up request:', error.message)
         }
       })
+      .finally(() => setProductInfoLoading(false))
   }
 
   // git product by id
   const getProductById = id => {
-    setProduct()
+    setProduct({})
     setProductInfoLoading(true)
     api
       .get(`/product/${id}`)
       .then(res => {
         setProduct(res.data)
-        setProductInfoLoading(false)
       })
       .catch(error => {
         console.error(`Error fetching product with id ${id}:`, error)
       })
+      .finally(() => setProductInfoLoading(false))
   }
   // get last product
   const getLastProduct = () => {

@@ -41,8 +41,8 @@ const SignUp = ({ theme }) => {
       ...prevUserInfo,
       image:
         prevUserInfo.gender === 'male'
-          ? 'https://img.freepik.com/free-vector/man-red-shirt-with-white-collar_90220-2873.jpg?t=st=1725674282~exp=1725677882~hmac=f7bfca7602c44905f50116f08558e9b0094faedd3715e037043065702980835b&w=740'
-          : 'https://img.freepik.com/free-vector/woman-with-long-brown-hair-pink-shirt_90220-2940.jpg?t=st=1725675497~exp=1725679097~hmac=6525c0ab8754722d5d49af16b851ba4cfb611f06b073964f8975af7953025760&w=740',
+          ? 'https://img.freepik.com/premium-vector/happy-smiling-young-man-avatar-3d-portrait-man-cartoon-character-people-vector-illustration_653240-187.jpg?w=360'
+          : 'https://media.istockphoto.com/id/1081125770/vector/face-expression-of-woman-with-blond-hair.jpg?s=612x612&w=0&k=20&c=mN-oV1RNH964Hu8s8Qjie8tOf6Awyf6e-sYUjR_RnOk=',
     }))
   }, [userInfo?.gender])
   // submit function

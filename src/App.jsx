@@ -4,6 +4,7 @@ import UserLayout from './UserLayout'
 import AdminLayout from './AdminLayout'
 import { useAuth } from './context/Auth/AuthContext'
 import LogIn from './pages/user/LogIn'
+import ClockLoader from 'react-spinners/ClockLoader'
 
 const App = () => {
   const { userData } = useAuth()
@@ -36,7 +37,17 @@ const App = () => {
 
         <Route
           path='/admin/*'
-          element={userData?.role == 'admin' ? <AdminLayout /> : <LogIn />}
+          element={
+            !userData ? (
+              <div className='h-[90vh] flex items-center justify-center '>
+                <ClockLoader color='#2d5335' size='70' />
+              </div>
+            ) : userData?.role == 'admin' ? (
+              <AdminLayout />
+            ) : (
+              <LogIn />
+            )
+          }
         />
       </Routes>
     </div>

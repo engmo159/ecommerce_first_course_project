@@ -47,7 +47,10 @@ const NavList = ({ theme, setTheme }) => {
             to={'/cart'}
             className={`flex items-center  text-gray-900 px-4 py-1 rounded hover:scale-110 transition-all `}
           >
-            <Badge content={cartItems.length}>
+            <Badge
+              content={cartItems.length}
+              className={cartItems.length == 0 && 'hidden'}
+            >
               <CiShoppingCart className='text-3xl font-bold' />
             </Badge>
           </Link>

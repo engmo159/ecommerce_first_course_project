@@ -12,11 +12,11 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
     deleteItemInCart(productId)
   }
   const isLoading = cartLoading[productId] || {}
-
+  // ToDo spinner
   return (
     <div className='flex flex-col gap-8 m-4'>
       <div className='flex justify-evenly items-center'>
-        <img src={image} className='w-28' alt={title} />
+        <img src={image} className='max-w-28 max-h-28' alt={title} />
         <Typography variant='h5' color='gray' className='text-md uppercase '>
           {title}
         </Typography>

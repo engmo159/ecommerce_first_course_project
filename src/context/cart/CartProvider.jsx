@@ -8,10 +8,12 @@ const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
   const [cartLoading, setCartLoading] = useState({})
+  const [cartPageLoading, setCartPageLoading] = useState(false)
   const [clearCartLoading, setClearCartLoading] = useState(false)
 
   // getAllCartItems
   const fetchCartData = () => {
+    setCartPageLoading(true)
     setCartLoading({})
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/cart`)
@@ -35,6 +37,7 @@ const CartProvider = ({ children }) => {
         console.log(res)
       })
       .catch(err => console.error(err))
+      .finally(() => setCartPageLoading(false))
   }
   useEffect(() => {
     fetchCartData()
@@ -192,6 +195,7 @@ const CartProvider = ({ children }) => {
         fetchCartData,
         clearCartLoading,
         cartLoading,
+        cartPageLoading,
       }}
     >
       {children}

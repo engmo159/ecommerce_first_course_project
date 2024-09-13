@@ -32,7 +32,7 @@ const Profile = () => {
         <div className='m-12'>
           <Typography
             variant='h2'
-            className='text-4xl  text-blue-gray-700 dark:text-gray-300 my-4'
+            className='text-4xl md:text-start text-center  text-blue-gray-700 dark:text-gray-300 my-4'
           >
             My Profile
           </Typography>
@@ -43,7 +43,7 @@ const Profile = () => {
             <div className='flex flex-col gap-4'>
               <Typography
                 variant='h2'
-                className='text-3xl  text-green-700 uppercase'
+                className='text-3xl md:text-start text-center  text-green-700 uppercase'
               >
                 {firstName || ''}
               </Typography>
@@ -110,7 +110,7 @@ const Profile = () => {
               {disabled ? (
                 <Button
                   color='green'
-                  className='w-fit'
+                  className='md:w-fit w-full'
                   onClick={() => setDisabled(false)}
                 >
                   Edit Profile

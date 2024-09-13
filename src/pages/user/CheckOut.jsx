@@ -37,7 +37,7 @@ const CheckOut = () => {
             proceed to pay
           </Button>
         </form>
-        {/* checkout box */}
+        {/* checkout box   */}
         <Checkout btnDisabled />
       </div>
     </div>

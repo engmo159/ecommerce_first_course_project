@@ -12,6 +12,7 @@ const ProductsProvider = ({ children }) => {
   const [product, setProduct] = useState({})
   const [lastProduct, setLastProduct] = useState({})
   const [productInfoLoading, setProductInfoLoading] = useState(false)
+  const [filteredProducts, setFilteredProducts] = useState([])
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -156,6 +157,8 @@ const ProductsProvider = ({ children }) => {
         updateProduct,
         deleteProduct,
         addNewProduct,
+        filteredProducts,
+        setFilteredProducts,
       }}
     >
       {children}

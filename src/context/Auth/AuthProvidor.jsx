@@ -53,6 +53,7 @@ const AuthProvider = ({ children }) => {
   // user information fetching
   const getUserInfo = () => {
     if (token) {
+      setLoading(true)
       axios
         .get(`${import.meta.env.VITE_BACKEND_URL}/user/me`, {
           headers: {
@@ -64,6 +65,7 @@ const AuthProvider = ({ children }) => {
           setUserData(res.data)
         })
         .catch(error => console.error('Error fetching user data:', error))
+        .finally(() => setLoading(false))
     }
   }
   //update user info

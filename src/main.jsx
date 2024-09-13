@@ -8,7 +8,6 @@ import ProductsProvider from './context/Products/ProductsProvidor'
 import CartProvider from './context/cart/CartProvider.jsx'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    {' '}
     <AuthProvider>
       <ProductsProvider>
         <CartProvider>

@@ -30,12 +30,16 @@ const ProductCard = ({
   const { addItemsToCart, cartLoading } = useCart()
 
   return (
-    <Card className='flex  justify-between  border-none shadow-none cursor-pointer hover:scale-105 transition-all group hover:shadow-2xl'>
+    <Card className='flex  justify-between  border-none shadow-xl cursor-pointer  hover:scale-105 transition-all group hover:shadow-2xl'>
       <CardHeader
         color='transparent'
         className='relative border-none shadow-none'
       >
-        <img src={image} loading='lazy' className='max-w-36 max-h-36 mx-auto' />
+        <img
+          src={image}
+          loading='lazy'
+          className='max-w-36 max-h-36 mx-auto rounded '
+        />
       </CardHeader>
       <CardBody className='p-2 flex flex-col '>
         <div className='hidden group-hover:flex items-center justify-between '>
@@ -43,7 +47,6 @@ const ProductCard = ({
             className=' rounded-none bg-transparent text-green-800 font-bold text-md border-none shadow-none hover:shadow-none'
             onClick={() => {
               addItemsToCart(_id)
-              // console.log(cartLoading[_id])
             }}
             disabled={cartLoading[_id]?.add}
           >
@@ -55,17 +58,13 @@ const ProductCard = ({
           </Button>
           <CiShoppingCart color='blue' className='text-2xl font-bold ' />
         </div>
-        <Typography
-          variant='h5'
-          color='gray'
-          className='text-lg   group-hover:hidden '
-        >
-          {title}
+        <Typography variant='h5' color='gray' className='text-lg '>
+          {title?.slice(0, 30)}
         </Typography>
         <Typography
           variant='paragraph'
           color='gray'
-          className='text-xs text-center '
+          className='text-xs text-center group-hover:hidden '
         >
           {description?.slice(0, 70)}
         </Typography>

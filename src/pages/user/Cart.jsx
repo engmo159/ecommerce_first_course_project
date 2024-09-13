@@ -29,7 +29,7 @@ const Cart = () => {
           <div className='w-full flex flex-col justify-evenly gap-2 my-8'>
             {/* clear cart items  */}
             <Button
-              className=' text-blue-800 w-fit mx-auto'
+              className='bg-blue-gray-900 w-fit mx-auto'
               onClick={() => {
                 clearCartHandler()
               }}
@@ -41,7 +41,7 @@ const Cart = () => {
                 <div className='flex justify-center gap-2'>
                   <Typography
                     variant='h5'
-                    color='gray'
+                    color='red'
                     className='text-lg uppercase '
                   >
                     ClearCart
@@ -66,8 +66,7 @@ const Cart = () => {
             )}
             <Typography
               variant='h5'
-              color='gray'
-              className='text-2xl uppercase '
+              className='text-2xl uppercase text-gray-800 dark:text-white'
             >
               total amount :{(totalAmount || 0).toFixed(2)} $
             </Typography>

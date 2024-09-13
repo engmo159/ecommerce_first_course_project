@@ -18,7 +18,7 @@ const UserDashboard = () => {
     <>
       {loading ? (
         <div className='h-[90vh] flex items-center justify-center '>
-          <ClockLoader color='#2d5335' size='70' />
+          <ClockLoader color='#2d5335' size={70} />
         </div>
       ) : (
         <div className='w-full flex flex-col gap-4'>

@@ -12,11 +12,13 @@ const InputForm = ({
   disabled,
   onChange,
 }) => {
-  //   const { userData } = useAuth()
   return (
     <div>
-      <Typography variant='paragraph' className=' text-gray-700 mb-2 font-bold'>
-        {label}
+      <Typography
+        variant='paragraph'
+        className=' text-gray-700 dark:text-blue-gray-300 mb-2 font-bold'
+      >
+        {label || ''}
       </Typography>
       {textType && (
         <Input
@@ -26,13 +28,13 @@ const InputForm = ({
           }}
           type='text'
           //   label={input}
-          value={input}
+          value={input || ''}
           disabled={disabled}
           onChange={onChange}
         />
       )}
       {selectType && (
-        <Select value={gender} onChange={onChange} disabled={disabled}>
+        <Select value={gender || ''} onChange={onChange} disabled={disabled}>
           <Option value='male'>Male</Option>
           <Option value='female'>Female</Option>
         </Select>

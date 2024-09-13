@@ -38,14 +38,14 @@ const App = () => {
         <Route
           path='/admin/*'
           element={
-            !userData ? (
-              <div className='h-[90vh] flex items-center justify-center '>
-                <ClockLoader color='#2d5335' size='70' />
-              </div>
-            ) : userData?.role == 'admin' ? (
+            userData?.role == 'admin' ? (
               <AdminLayout />
-            ) : (
+            ) : userData?.role == 'user' ? (
               <LogIn />
+            ) : (
+              <div className='h-[90vh] flex items-center justify-center '>
+                <ClockLoader color='#2d5335' size={70} />
+              </div>
             )
           }
         />

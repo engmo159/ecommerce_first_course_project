@@ -48,8 +48,8 @@ const NavList = ({ theme, setTheme }) => {
             className={`flex items-center  text-gray-900 px-4 py-1 rounded hover:scale-110 transition-all `}
           >
             <Badge
-              content={cartItems.length}
-              className={cartItems.length == 0 && 'hidden'}
+              content={cartItems?.length}
+              className={cartItems?.length == 0 ? 'hidden' : ''}
             >
               <CiShoppingCart className='text-3xl font-bold' />
             </Badge>
@@ -73,7 +73,6 @@ const NavList = ({ theme, setTheme }) => {
             </Link>
           </Typography>
         )}
-
         <DarkMode setTheme={setTheme} theme={theme} />
       </div>
     </ul>

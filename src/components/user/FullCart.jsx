@@ -12,15 +12,21 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
     deleteItemInCart(productId)
   }
   const isLoading = cartLoading[productId] || {}
-  // ToDo spinner
+
   return (
     <div className='flex flex-col gap-8 m-4'>
       <div className='flex justify-evenly items-center'>
         <img src={image} className='max-w-28 max-h-28' alt={title} />
-        <Typography variant='h5' color='gray' className='text-md uppercase '>
-          {title}
+        <Typography
+          variant='h5'
+          className='text-md uppercase text-gray-600 dark:text-gray-300'
+        >
+          {title?.slice(0, 30)}
         </Typography>
-        <Typography variant='h5' color='gray' className='text-2xl uppercase '>
+        <Typography
+          variant='h5'
+          className='text-2xl uppercase text-gray-600 dark:text-gray-300'
+        >
           {price} $
         </Typography>
       </div>
@@ -34,7 +40,10 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
         >
           {isLoading.update ? <Spinner className='h-4 w-4' /> : 'Decrease'}
         </Button>
-        <Typography variant='h5' color='gray' className='text-2xl uppercase '>
+        <Typography
+          variant='h5'
+          className='text-2xl uppercase text-gray-600 dark:text-gray-300 '
+        >
           {quantity}
         </Typography>
         <Button
@@ -45,7 +54,10 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
         >
           {isLoading.update ? <Spinner className='h-4 w-4' /> : 'Increase'}
         </Button>
-        <Typography variant='h5' color='gray' className='text-2xl uppercase '>
+        <Typography
+          variant='h5'
+          className='text-2xl uppercase text-gray-600 dark:text-gray-300'
+        >
           {(price * quantity).toFixed(2)} $
         </Typography>
         <Typography variant='h5' color='gray' className='text-red-400'>

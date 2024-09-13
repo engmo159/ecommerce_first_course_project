@@ -52,7 +52,7 @@ const EditProduct = () => {
         <div className='gap-8 flex items-center w-full '>
           <Input
             label='ProductName'
-            value={productInfo?.title}
+            value={productInfo?.title || ''}
             onChange={e =>
               setProductInfo(prev => ({ ...prev, title: e.target.value }))
             }
@@ -61,7 +61,7 @@ const EditProduct = () => {
           />
           <Input
             label='ProductDescription'
-            value={productInfo?.description}
+            value={productInfo?.description || ''}
             onChange={e =>
               setProductInfo(prev => ({
                 ...prev,
@@ -75,7 +75,7 @@ const EditProduct = () => {
         <div className='w-full gap-8 flex items-center'>
           <Input
             label='ProductPrice'
-            value={productInfo?.price}
+            value={productInfo?.price || 0}
             onChange={e =>
               setProductInfo(prev => ({
                 ...prev,
@@ -87,7 +87,7 @@ const EditProduct = () => {
           />
           <Input
             label='Stock'
-            value={productInfo?.stock}
+            value={productInfo?.stock || 0}
             onChange={e =>
               setProductInfo(prev => ({
                 ...prev,
@@ -101,7 +101,7 @@ const EditProduct = () => {
         <div className='w-full gap-8 flex items-center'>
           <Input
             label='ProductThumbnail'
-            value={productInfo?.image}
+            value={productInfo?.image || ''}
             onChange={e =>
               setProductInfo(prev => ({
                 ...prev,

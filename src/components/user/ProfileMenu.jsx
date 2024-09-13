@@ -55,6 +55,23 @@ const ProfileMenu = () => {
       </MenuHandler>
       <MenuList className='p-1'>
         {userData?.role == 'admin' && (
+          <Link to={'/admin'}>
+            <MenuItem
+              onClick={closeMenu}
+              className={`flex items-center  gap-2 rounded `}
+            >
+              <Typography
+                as='span'
+                variant='small'
+                className='font-normal '
+                color={'teal'}
+              >
+                Admin Dashboard
+              </Typography>
+            </MenuItem>
+          </Link>
+        )}
+        <Link to={'/profile'}>
           <MenuItem
             onClick={closeMenu}
             className={`flex items-center gap-2 rounded `}
@@ -63,28 +80,12 @@ const ProfileMenu = () => {
               as='span'
               variant='small'
               className='font-normal'
-              color={'teal'}
-            >
-              <Link to={'/admin'}> Admin Dashboard</Link>
-            </Typography>
-          </MenuItem>
-        )}
-
-        <MenuItem
-          onClick={closeMenu}
-          className={`flex items-center gap-2 rounded `}
-        >
-          <Link to={'/profile'}>
-            <Typography
-              as='span'
-              variant='small'
-              className='font-normal'
               color={'inherit'}
             >
               My Profile
             </Typography>
-          </Link>
-        </MenuItem>
+          </MenuItem>
+        </Link>
         <MenuItem
           onClick={logOutHandler}
           className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus

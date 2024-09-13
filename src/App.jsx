@@ -9,7 +9,7 @@ import ClockLoader from 'react-spinners/ClockLoader'
 const App = () => {
   const { userData, theme, setTheme } = useAuth()
 
-  // dark light theme setup
+  // dark light theme  setup
 
   useEffect(() => {
     if (

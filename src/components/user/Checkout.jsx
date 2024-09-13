@@ -1,9 +1,11 @@
 import { Button, Input, Typography } from '@material-tailwind/react'
 import { useCart } from '../../context/cart/CartContext'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/Auth/AuthContext'
 
 const Checkout = ({ btnDisabled }) => {
   const { cartItems, totalAmount } = useCart()
+  const { isAuthenticated } = useAuth()
   return (
     <div className='bg-teal-700 flex flex-col md:gap-8 p-4 rounded-3xl  '>
       <div className='flex justify-between '>
@@ -37,7 +39,7 @@ const Checkout = ({ btnDisabled }) => {
         </Typography>
       </div>
       <div className={btnDisabled && 'hidden'}>
-        <Link to={'/checkout'}>
+        <Link to={`${isAuthenticated ? '/checkout' : '/login'} `}>
           <Button
             color='green'
             className='text-lg text-center items-center w-full'

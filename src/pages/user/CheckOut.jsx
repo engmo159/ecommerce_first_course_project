@@ -19,7 +19,7 @@ const CheckOut = () => {
             <Typography variant='h5' className='text-xl text-teal-400'>
               E Mail
             </Typography>
-            <Input label={userData.email} disabled />
+            <Input label={userData?.email || ''} disabled />
           </div>
           <div className='flex flex-col gap-2'>
             <Typography variant='h5' className='text-xl text-teal-400'>

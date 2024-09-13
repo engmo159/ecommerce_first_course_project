@@ -18,13 +18,13 @@ const Cart = () => {
   return (
     <div className='min-h-screen'>
       {cartPageLoading ? (
-        <div className='h-[80vh] flex items-center justify-center '>
+        <div className='h-[80vh] flex items-center justify-center  '>
           <ClockLoader color='#1f3f28' size={60} />
         </div>
       ) : cartItems?.length == 0 ? (
         <EmptyCart />
       ) : (
-        <div className='flex flex-col lg:flex-row justify-evenly items-center md:gap-16 md:m-8'>
+        <div className='flex flex-col lg:flex-row justify-evenly items-center md:items-start md:gap-16 md:m-8'>
           {/* // cart items */}
           <div className='w-full flex flex-col justify-evenly gap-2 my-8'>
             {/* clear cart items  */}
@@ -66,9 +66,13 @@ const Cart = () => {
             )}
             <Typography
               variant='h5'
-              className='text-lg md:text-2xl uppercase text-gray-800 dark:text-white'
+              className='text-lg md:text-2xl uppercase text-gray-800 dark:text-white text-center'
             >
-              total amount :{(totalAmount || 0).toFixed(2)} $
+              total amount :{' '}
+              <span className='text-green-800'>
+                {(totalAmount || 0).toFixed(2)}
+              </span>{' '}
+              $
             </Typography>
           </div>
           {/* checkout */}

@@ -24,7 +24,7 @@ const Cart = () => {
       ) : cartItems?.length == 0 ? (
         <EmptyCart />
       ) : (
-        <div className='text-center flex justify-evenly gap-16 m-8'>
+        <div className='flex flex-col lg:flex-row justify-evenly items-center md:gap-16 md:m-8'>
           {/* // cart items */}
           <div className='w-full flex flex-col justify-evenly gap-2 my-8'>
             {/* clear cart items  */}
@@ -38,15 +38,15 @@ const Cart = () => {
               {clearCartLoading ? (
                 <Spinner />
               ) : (
-                <div className='flex justify-center gap-2'>
+                <div className='flex justify-center items-center md:gap-2'>
                   <Typography
                     variant='h5'
                     color='red'
-                    className='text-lg uppercase '
+                    className='text-md md:text-lg uppercase '
                   >
                     ClearCart
                   </Typography>
-                  <MdDelete className='text-3xl' />
+                  <MdDelete className='text-lg md:text-3xl' />
                 </div>
               )}
             </Button>
@@ -66,13 +66,13 @@ const Cart = () => {
             )}
             <Typography
               variant='h5'
-              className='text-2xl uppercase text-gray-800 dark:text-white'
+              className='text-lg md:text-2xl uppercase text-gray-800 dark:text-white'
             >
               total amount :{(totalAmount || 0).toFixed(2)} $
             </Typography>
           </div>
           {/* checkout */}
-          <div className='w-1/2'>
+          <div className='lg:w-1/2'>
             <Checkout />
           </div>
         </div>

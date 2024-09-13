@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Checkout = ({ btnDisabled }) => {
   const { cartItems, totalAmount } = useCart()
   return (
-    <div className='bg-teal-700 flex flex-col gap-8 p-4 rounded-3xl  '>
+    <div className='bg-teal-700 flex flex-col md:gap-8 p-4 rounded-3xl  '>
       <div className='flex justify-between '>
         <Typography variant='h5' color='white' className='text-md '>
           Total Price
@@ -22,7 +22,7 @@ const Checkout = ({ btnDisabled }) => {
           {(totalAmount * 0.1).toFixed(2)} $
         </Typography>
       </div>
-      <div className='flex justify-between gap-24'>
+      <div className='flex justify-between md:gap-24'>
         <Typography variant='h5' color='white' className='text-md'>
           Promo Code
         </Typography>

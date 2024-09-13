@@ -14,35 +14,40 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
   const isLoading = cartLoading[productId] || {}
 
   return (
-    <div className='flex flex-col gap-8 m-4'>
+    <div className='flex flex-col gap-2 md:gap-8 md:m-4'>
+      {/* img && title && price */}
       <div className='flex justify-evenly items-center'>
-        <img src={image} className='max-w-28 max-h-28' alt={title} />
+        <img
+          src={image}
+          className='max-w-12 max-h-12 md:max-w-28 md:max-h-28'
+          alt={title}
+        />
         <Typography
           variant='h5'
-          className='text-md uppercase text-gray-600 dark:text-gray-300'
+          className=' text-sm md:text-md uppercase text-gray-600 dark:text-gray-300'
         >
           {title?.slice(0, 30)}
         </Typography>
         <Typography
           variant='h5'
-          className='text-2xl uppercase text-gray-600 dark:text-gray-300'
+          className='text-md sm:text-lg md:text-2xl uppercase text-gray-600 dark:text-gray-300'
         >
           {price} $
         </Typography>
       </div>
-
+      {/* quantity operations amount */}
       <div className='flex justify-evenly items-center'>
         <Button
           color='red'
           disabled={quantity == 1 || isLoading.update}
           onClick={() => handleQuantity(productId, quantity - 1)}
-          className='w-32 flex justify-center items-center'
+          className='w-20 md:w-32 flex justify-center items-center'
         >
           {isLoading.update ? <Spinner className='h-4 w-4' /> : 'Decrease'}
         </Button>
         <Typography
           variant='h5'
-          className='text-2xl uppercase text-gray-600 dark:text-gray-300 '
+          className='text-lg md:text-2xl uppercase text-gray-600 dark:text-gray-300 '
         >
           {quantity}
         </Typography>
@@ -50,17 +55,21 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
           color='green'
           onClick={() => handleQuantity(productId, quantity + 1)}
           disabled={quantity >= stock || isLoading.update}
-          className='w-32 flex justify-center items-center'
+          className='w-20 md:w-32 flex justify-center items-center'
         >
           {isLoading.update ? <Spinner className='h-4 w-4' /> : 'Increase'}
         </Button>
         <Typography
           variant='h5'
-          className='text-2xl uppercase text-gray-600 dark:text-gray-300'
+          className='text-lg md:text-2xl uppercase text-gray-600 dark:text-gray-300'
         >
           {(price * quantity).toFixed(2)} $
         </Typography>
-        <Typography variant='h5' color='gray' className='text-red-400'>
+        <Typography
+          variant='h5'
+          color='gray'
+          className='hidden md:flex items-center text-red-400'
+        >
           <span className='text-sm text-gray-500'>items left :</span>
           {stock - quantity}
         </Typography>

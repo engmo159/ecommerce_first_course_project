@@ -43,7 +43,7 @@ const FilteredCategories = () => {
   }
 
   return (
-    <div className='flex flex-col   bg-blue-gray-200 shadow-xl sticky top-20 h-screen'>
+    <div className='lg:flex lg:flex-col hidden bg-blue-gray-200 shadow-xl sticky top-20 h-screen'>
       {productsCategories.map((category, index) => (
         <List key={index} className='!min-w-max lg:!min-w-60 '>
           <ListItem className='p-0 '>

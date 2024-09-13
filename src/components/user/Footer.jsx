@@ -2,7 +2,7 @@ import { Typography } from '@material-tailwind/react'
 
 const Footer = () => {
   return (
-    <footer className='w-full bg-black p-8'>
+    <footer className='w-full bg-black p-8 dark:border border-gray-400'>
       <div className='flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12  text-center md:justify-between'>
         <img src='/img/footer-logo.png' alt='logo-ct' className='w-22' />
         <ul className='flex flex-wrap items-center gap-y-2 gap-x-8'>

@@ -19,7 +19,7 @@ const FullCart = ({ productId, title, image, price, quantity, stock }) => {
       <div className='flex justify-evenly items-center'>
         <img
           src={image}
-          className='max-w-12 max-h-12 md:max-w-28 md:max-h-28'
+          className='max-w-12 max-h-12 md:max-w-28 md:max-h-28 rounded'
           alt={title}
         />
         <Typography

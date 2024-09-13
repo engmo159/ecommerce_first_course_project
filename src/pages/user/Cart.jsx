@@ -68,10 +68,10 @@ const Cart = () => {
               variant='h5'
               className='text-lg md:text-2xl uppercase text-gray-800 dark:text-white text-center'
             >
-              total amount :{' '}
-              <span className='text-green-800'>
+              total amount :
+              <span className='text-green-800 mx-0.5'>
                 {(totalAmount || 0).toFixed(2)}
-              </span>{' '}
+              </span>
               $
             </Typography>
           </div>

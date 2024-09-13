@@ -29,11 +29,10 @@ const SignUp = () => {
   const [err, setErr] = useState({})
   const [isChecked, setIsChecked] = useState(false)
   const [checkBoxColor, setCheckBoxColor] = useState('gray')
-
+  const { registerUser, errorMsg, setErrorMsg, loading, theme } = useAuth()
   //   other variables && hooks
   const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
-  const { registerUser, errorMsg, setErrorMsg, loading, theme } = useAuth()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
   // update image info
   useEffect(() => {

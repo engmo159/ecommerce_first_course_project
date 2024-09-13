@@ -14,6 +14,7 @@ import { useAuth } from '../../context/Auth/AuthContext'
 
 const LogIn = () => {
   // states
+  const { login, theme } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [userInfo, setUserInfo] = useState({ email: '', password: '' })
   const [errorSign, setErrorSign] = useState({
@@ -29,7 +30,7 @@ const LogIn = () => {
 
   const navigate = useNavigate()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
-  const { login, theme } = useAuth()
+
   // submit function
   const submitHandler = e => {
     e.preventDefault()

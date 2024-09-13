@@ -68,20 +68,21 @@ const SignUp = ({ theme }) => {
     <Card
       color='transparent'
       shadow={false}
-      className='flex  items-center mt-4 text-black dark:text-white w-full'
+      className='flex  items-center md:mt-4 text-black dark:text-white w-full'
     >
       <Typography variant='h4'>Sign Up</Typography>
       <Typography color={'gray'} className='mt-1 font-normal'>
         Nice to meet you! Enter your details to register.
       </Typography>
       <form
-        className='mt-8 mb-2 md:w-1/2 max-w-screen-lg flex flex-col gap-4'
+        className='mt-8 mb-2 w-1/2 max-w-screen-lg flex flex-col gap-4'
         onSubmit={submitHandler}
       >
         <div>
           <h3 className='text-center text-red-900'>{errorMsg}</h3>
         </div>
-        <div className='flex  justify-evenly gap-2'>
+        {/* first name && last name  */}
+        <div className='flex flex-col lg:flex-row justify-evenly gap-2'>
           <div className='w-full'>
             <Input
               label='FirstName'
@@ -132,7 +133,7 @@ const SignUp = ({ theme }) => {
             <HelperText text='password must be more than 5 characters' />
           </div>
         </div>
-        <div className='flex  justify-evenly gap-2'>
+        <div className='flex lg:flex-row flex-col  justify-evenly gap-2'>
           <div className='w-full'>
             <Input
               label='City'

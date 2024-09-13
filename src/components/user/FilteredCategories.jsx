@@ -68,7 +68,7 @@ const FilteredCategories = () => {
               <Typography
                 htmlFor={`category-${index}`}
                 className='font-medium cursor-pointer'
-                component='label' // Make Typography the label
+                component='label'
               >
                 {category || 'Not Categorized'}
               </Typography>

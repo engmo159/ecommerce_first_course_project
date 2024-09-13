@@ -45,15 +45,15 @@ const FilteredCategories = () => {
   return (
     <div className='lg:flex lg:flex-col hidden bg-blue-gray-200 shadow-xl sticky top-20 h-screen'>
       {productsCategories.map((category, index) => (
-        <List key={index} className='!min-w-max lg:!min-w-60 '>
-          <ListItem className='p-0 '>
+        <List key={index} className='!min-w-max lg:!min-w-60'>
+          <ListItem className='p-0'>
             <label
-              htmlFor='vertical-list-react'
+              htmlFor={`category-${index}`}
               className='flex w-full cursor-pointer items-center p-0 md:px-3 md:py-2'
             >
               <ListItemPrefix className='mr-1 md:mr-3'>
                 <Checkbox
-                  id='vertical-list-react'
+                  id={`category-${index}`}
                   ripple={false}
                   className='hover:before:opacity-0 bg-green-900'
                   containerProps={{
@@ -65,7 +65,11 @@ const FilteredCategories = () => {
                   color='green'
                 />
               </ListItemPrefix>
-              <Typography color='blue-gray' className='font-medium'>
+              <Typography
+                htmlFor={`category-${index}`}
+                className='font-medium cursor-pointer'
+                component='label' // Make Typography the label
+              >
                 {category || 'Not Categorized'}
               </Typography>
             </label>

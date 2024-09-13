@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
   )
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [theme, setTheme] = useState('')
   const navigate = useNavigate()
   const api = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -237,6 +238,8 @@ const AuthProvider = ({ children }) => {
         errorMsg,
         setErrorMsg,
         registerUser,
+        theme,
+        setTheme,
       }}
     >
       {children}

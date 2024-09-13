@@ -12,7 +12,7 @@ import {
 } from '@material-tailwind/react'
 import { useAuth } from '../../context/Auth/AuthContext'
 
-const LogIn = ({ theme }) => {
+const LogIn = () => {
   // states
   const [showPassword, setShowPassword] = useState(false)
   const [userInfo, setUserInfo] = useState({ email: '', password: '' })
@@ -29,7 +29,7 @@ const LogIn = ({ theme }) => {
 
   const navigate = useNavigate()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
-  const { login } = useAuth()
+  const { login, theme } = useAuth()
   // submit function
   const submitHandler = e => {
     e.preventDefault()

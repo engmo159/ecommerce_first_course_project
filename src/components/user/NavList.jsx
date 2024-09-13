@@ -7,7 +7,7 @@ import { IoEnterOutline } from 'react-icons/io5'
 import { CiShoppingCart } from 'react-icons/ci'
 import { useCart } from '../../context/cart/CartContext'
 
-const NavList = ({ theme, setTheme }) => {
+const NavList = () => {
   const { isAuthenticated } = useAuth()
   const { cartItems } = useCart()
   const location = useLocation()
@@ -73,7 +73,7 @@ const NavList = ({ theme, setTheme }) => {
             </Link>
           </Typography>
         )}
-        <DarkMode setTheme={setTheme} theme={theme} />
+        <DarkMode />
       </div>
     </ul>
   )

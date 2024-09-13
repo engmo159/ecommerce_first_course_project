@@ -14,7 +14,7 @@ import {
 import HelperText from '../../components/user/HelperText'
 import { useAuth } from '../../context/Auth/AuthContext'
 
-const SignUp = ({ theme }) => {
+const SignUp = () => {
   // states
 
   const [userInfo, setUserInfo] = useState({
@@ -33,8 +33,8 @@ const SignUp = ({ theme }) => {
   //   other variables && hooks
   const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
+  const { registerUser, errorMsg, setErrorMsg, loading, theme } = useAuth()
   const colorTheme = `${theme == 'dark' ? 'white' : 'blue-gray'}`
-  const { registerUser, errorMsg, setErrorMsg, loading } = useAuth()
   // update image info
   useEffect(() => {
     setUserInfo(prevUserInfo => ({

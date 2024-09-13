@@ -22,7 +22,7 @@ const ProductDashboard = () => {
         </div>
       ) : (
         <div className='w-full flex flex-col  gap-4 '>
-          <h1 className='text-center text-4xl text-gray-900 font-bold mt-4'>
+          <h1 className='text-center text-4xl text-gray-900 dark:text-gray-200 font-bold mt-4'>
             Products
           </h1>
           <Link to={`/admin/products/add`}>
@@ -31,7 +31,7 @@ const ProductDashboard = () => {
             </Button>
           </Link>
           <section className='w-full '>
-            <Card className='h-full w-full bg-blue-gray-700  border border-gray-500 px-6 '>
+            <Card className='h-full w-full bg-blue-gray-700  border border-gray-500 dark:border-none px-6 '>
               <table className='w-full min-w-max table-auto text-center'>
                 <thead>
                   <tr>

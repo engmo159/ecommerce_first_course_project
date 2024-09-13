@@ -7,7 +7,7 @@ import {
 } from '@material-tailwind/react'
 import NavList from './NavList'
 
-const Header = ({ setTheme, theme }) => {
+const Header = () => {
   const [openNav, setOpenNav] = useState(false)
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Header = ({ setTheme, theme }) => {
         {/* other nav items  */}
         <div className='flex items-center lg:w-2/3'>
           <div className='hidden lg:flex w-full'>
-            <NavList setTheme={setTheme} theme={theme} />
+            <NavList />
           </div>
 
           {/* mobile hamburger item  */}
@@ -78,7 +78,7 @@ const Header = ({ setTheme, theme }) => {
       </div>
       {/* mobile hamburger menu */}
       <Collapse open={openNav}>
-        <NavList setTheme={setTheme} theme={theme} />
+        <NavList />
       </Collapse>
     </Navbar>
   )

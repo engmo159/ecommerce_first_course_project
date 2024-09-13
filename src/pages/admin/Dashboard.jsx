@@ -17,7 +17,7 @@ const Dashboard = () => {
   return (
     <div className='flex justify-evenly items-center h-[80vh] gap-8 mx-8'>
       {/* user box */}
-      <div className='bg-[#05081c] flex flex-col justify-evenly items-center gap-8 p-8 rounded-xl flex-1'>
+      <div className='bg-[#05081c] dark:bg-blue-gray-800 flex flex-col justify-evenly items-center gap-8 p-8 rounded-xl flex-1'>
         <Typography
           as='h2'
           className='font-bold transition-colors text-4xl text-indigo-600 '
@@ -47,7 +47,7 @@ const Dashboard = () => {
         </Link>
       </div>
       {/* product box */}
-      <div className='bg-[#05081c] flex flex-col justify-evenly items-center gap-8 p-8 rounded-xl flex-1'>
+      <div className='bg-[#05081c] flex flex-col justify-evenly items-center gap-8 p-8 rounded-xl flex-1 dark:bg-blue-gray-800 '>
         <Typography
           as='h2'
           className='font-bold transition-colors text-4xl text-indigo-600 '

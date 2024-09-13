@@ -1,4 +1,7 @@
-const DarkMode = ({ setTheme, theme }) => {
+import { useAuth } from '../../context/Auth/AuthContext'
+
+const DarkMode = () => {
+  const { theme, setTheme } = useAuth()
   const setDarkTheme = () => {
     // document.documentElement.classList.add('dark')
     setTheme('dark')
@@ -29,7 +32,7 @@ const DarkMode = ({ setTheme, theme }) => {
         {theme === 'dark' ? (
           <a
             id='theme-switcher'
-            className='block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-100 dark:hover:bg-gray-600 focus:dark:bg-transparent rounded border'
+            className='block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700  active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-100  rounded border'
             href='#'
             data-theme='light'
             onClick={e => onThemeSwitcherItemClick(e)}
@@ -54,7 +57,7 @@ const DarkMode = ({ setTheme, theme }) => {
         ) : (
           <a
             id='theme-switcher'
-            className='block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-100 dark:hover:bg-gray-600 focus:dark:bg-gray-600'
+            className='block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100  active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-100 dark:hover:bg-gray-600 '
             href='#'
             data-theme='dark'
             data-twe-dropdown-item-ref
@@ -69,7 +72,7 @@ const DarkMode = ({ setTheme, theme }) => {
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
                   fill='currentColor'
-                  className='inline-block h-6 w-6'
+                  className='inline-block h-6 w-6 rounded-lg'
                 >
                   <path
                     fillRule='evenodd'

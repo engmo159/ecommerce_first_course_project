@@ -11,19 +11,19 @@ import Footer from './components/user/Footer'
 import CheckOut from './pages/user/CheckOut'
 import Profile from './pages/user/Profile'
 
-const UserLayout = ({ theme, setTheme }) => {
+const UserLayout = () => {
   return (
     <div>
       <BlindingBar />
-      <Header setTheme={setTheme} theme={theme} />
+      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<Products />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<CheckOut />} />
         <Route path='/profile' element={<Profile />} />
-        <Route path='/login' element={<LogIn theme={theme} />} />
-        <Route path='/signup' element={<SignUp theme={theme} />} />
+        <Route path='/login' element={<LogIn />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
       <Footer />

@@ -29,7 +29,7 @@ const Cart = () => {
           <div className='w-full flex flex-col justify-evenly gap-2 my-8'>
             {/* clear cart items  */}
             <Button
-              className='bg-blue-gray-900 w-fit mx-auto'
+              className='bg-blue-gray-900 dark:bg-gray-200 w-fit mx-auto'
               onClick={() => {
                 clearCartHandler()
               }}

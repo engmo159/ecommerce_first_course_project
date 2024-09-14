@@ -33,7 +33,7 @@ const ShowProduct = () => {
                     {product?.title || ''}
                   </Typography>
                   <Typography color='gray' className='mt-2 font-normal'>
-                    {product?.description?.slice(1, 100) || ''}
+                    {product?.description?.slice(0, 100) || ''}
                   </Typography>
                   <div className='flex justify-around w-full'>
                     <Typography variant='h4' color='blue-gray'>

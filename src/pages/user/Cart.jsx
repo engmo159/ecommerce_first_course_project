@@ -46,7 +46,7 @@ const Cart = () => {
                   >
                     ClearCart
                   </Typography>
-                  <MdDelete className='text-lg md:text-3xl' />
+                  <MdDelete className='text-lg md:text-3xl dark:text-gray-800' />
                 </div>
               )}
             </Button>
